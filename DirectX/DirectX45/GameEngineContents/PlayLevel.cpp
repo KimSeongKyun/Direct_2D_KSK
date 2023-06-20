@@ -1,7 +1,6 @@
 #include "PrecompileHeader.h"
 #include "PlayLevel.h"
 #include "Player.h"
-#include "TestObject.h"
 #include "PlayLevelUIActor.h"
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
@@ -38,23 +37,32 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Start()
 {
-	// GetMainCamera()->GetCamTarget()->DepthSettingOff();
+	GetMainCamera()->GetCamTarget()->DepthSettingOff();
+	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	
 
-	{
-		GameEngineDirectory NewDir;
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Texture");
-		NewDir.Move("Test");
+	//{
+	//	GameEngineDirectory NewDir;
+	//	NewDir.MoveParentToDirectory("ContentResources");
+	//	NewDir.Move("ContentResources");
+	//	NewDir.Move("Texture");
+	//
 
-		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png", });
+	//	std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png", });
+
+	//	
 
 
-		for (size_t i = 0; i < File.size(); i++)
-		{
-			GameEngineTexture::Load(File[i].GetFullPath());
-		}
-	}
+	//	for (size_t i = 0; i < File.size(); i++)
+	//	{
+	//		GameEngineTexture::Load(File[i].GetFullPath());
+	//	}
+
+	//}
+
+	Object0 = CreateActor<Player>();
+	Object0->GetTransform()->SetLocalPosition({ -100.0f, 0.0f, 0.0f });
 }
 void PlayLevel::LevelChangeStart()
 {

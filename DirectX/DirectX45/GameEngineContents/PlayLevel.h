@@ -17,7 +17,6 @@ public:
 
 	std::shared_ptr<class GameEngineVideo> Video;
 	std::shared_ptr<class TestObject> Object3;
-
 	std::shared_ptr<class FadeEffect> FEffect;
 
 protected:
@@ -29,7 +28,7 @@ protected:
 
 
 private:
-	void PlayerCreate();
+
 
 
 };

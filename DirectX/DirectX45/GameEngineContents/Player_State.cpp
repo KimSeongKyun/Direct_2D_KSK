@@ -9,138 +9,57 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineSprite.h>
-#include "TestObject.h"
+
 
 
 void Player::StateInit() 
 {
 	FSM.CreateState(
 		{
-			.Name = "FreeMove",
+			.Name = "Move",
 			.Start = [this]()
 		{
-			// this->MainRenderer->ChangeAnimation();
-
-			// int a = 0;
+			
 		},
 			.Update = [this](float _DeltaTime)
 		{
 
-
-			// 한가지 상태를 뭘로 처리할거냐?
-			// 클래스로 하면 클래스로
-			// 함수포인터로 할수 있다.
-			// 
-
-			//GameEngineTextureSetter* Tex = MainRenderer->GetShaderResHelper().GetTextureSetter("DiffuseTex");
-			//std::string Name = Tex->Res->GetNameToString();
-
-
-			float RotSpeed = 10.0f;
-
-			float Speed = 200.0f;
-
-			if (true == GameEngineInput::IsPress("PlayerSpeedBoost"))
+			if (false == GameEngineInput::IsDown("MoveLeft") ||
+				false == GameEngineInput::IsDown("MoveRight") ||
+				false == GameEngineInput::IsDown("Up") ||
+				false == GameEngineInput::IsDown("Down") ||
+				false == GameEngineInput::IsDown("Swing") ||
+				false == GameEngineInput::IsDown("Jump"))
 			{
-				Speed = 500.0f;
+				FSM.ChangeState("Idle");
 			}
 
-			if (true == GameEngineInput::IsDown("PlayerMoveLeft"))
+			if (true == GameEngineInput::IsDown("MoveLeft"))
 			{
 				GetTransform()->SetLocalNegativeScaleX();
 			}
-			else if (true == GameEngineInput::IsDown("PlayerMoveRight"))
+			if (true == GameEngineInput::IsDown("MoveRight"))
 			{
 				GetTransform()->SetLocalPositiveScaleX();
 			}
 
-			if (true == GameEngineInput::IsPress("PlayerMoveLeft"))
+			if (true == GameEngineInput::IsPress("MoveLeft"))
 			{
 				GetTransform()->AddLocalPosition(float4::Left * Speed * _DeltaTime);
 			}
-			if (true == GameEngineInput::IsPress("PlayerMoveRight"))
+			if (true == GameEngineInput::IsPress("MoveRight"))
 			{
 				GetTransform()->AddLocalPosition(float4::Right * Speed * _DeltaTime);
 			}
-			if (true == GameEngineInput::IsPress("PlayerMoveUp"))
+		
+			if (true == GameEngineInput::IsUp("MoveLeft"))
 			{
-				GetTransform()->AddLocalPosition(float4::Up * Speed * _DeltaTime);
+				FSM.ChangeState("Idle");
 			}
-			if (true == GameEngineInput::IsPress("PlayerMoveDown"))
+			if (true == GameEngineInput::IsUp("MoveRight"))
 			{
-				GetTransform()->AddLocalPosition(float4::Down * Speed * _DeltaTime);
+				FSM.ChangeState("Idle");
 			}
-			if (true == GameEngineInput::IsPress("PlayerMoveForward"))
-			{
-				GetTransform()->AddLocalPosition(GetTransform()->GetLocalForwardVector() * Speed * _DeltaTime);
-			}
-			if (true == GameEngineInput::IsPress("PlayerMoveBack"))
-			{
-				GetTransform()->AddLocalPosition(float4::Back * Speed * _DeltaTime);
-			}
-
-			if (true == GameEngineInput::IsPress("PlayerRotY+"))
-			{
-				GetTransform()->AddLocalRotation({ 0.0f, RotSpeed * _DeltaTime, 0.0f });
-			}
-			if (true == GameEngineInput::IsPress("PlayerRotY-"))
-			{
-				GetTransform()->AddLocalRotation({ 0.0f, -RotSpeed * _DeltaTime, 0.0f });
-			}
-			if (true == GameEngineInput::IsPress("PlayerRotZ+"))
-			{
-				GetTransform()->AddLocalRotation({ 0.0f, 0.0f, RotSpeed * _DeltaTime });
-			}
-			if (true == GameEngineInput::IsPress("PlayerRotZ-"))
-			{
-				GetTransform()->AddLocalRotation({ 0.0f, 0.0f, -RotSpeed * _DeltaTime });
-			}
-			if (true == GameEngineInput::IsPress("PlayerRotX+"))
-			{
-				GetTransform()->AddLocalRotation({ RotSpeed * _DeltaTime, 0.0f, 0.0f });
-			}
-			if (true == GameEngineInput::IsPress("PlayerRotX-"))
-			{
-				GetTransform()->AddLocalRotation({ -RotSpeed * _DeltaTime, 0.0f, 0.0f });
-			}
-
-			float ScaleSpeed = 10.0f;
-
-			if (true == GameEngineInput::IsPress("PlayerScaleY+"))
-			{
-				GetTransform()->AddLocalScale({ 0.0f, ScaleSpeed * _DeltaTime, 0.0f });
-			}
-			if (true == GameEngineInput::IsPress("PlayerScaleY-"))
-			{
-				GetTransform()->AddLocalScale({ 0.0f, -ScaleSpeed * _DeltaTime, 0.0f });
-			}
-			if (true == GameEngineInput::IsPress("PlayerScaleZ+"))
-			{
-				GetTransform()->AddLocalScale({ 0.0f, 0.0f, ScaleSpeed * _DeltaTime });
-			}
-			if (true == GameEngineInput::IsPress("PlayerScaleZ-"))
-			{
-				GetTransform()->AddLocalScale({ 0.0f, 0.0f, -ScaleSpeed * _DeltaTime });
-			}
-			if (true == GameEngineInput::IsPress("PlayerScaleX+"))
-			{
-				GetTransform()->AddLocalScale({ ScaleSpeed * _DeltaTime, 0.0f, 0.0f });
-			}
-			if (true == GameEngineInput::IsPress("PlayerScaleX-"))
-			{
-				GetTransform()->AddLocalScale({ -ScaleSpeed * _DeltaTime, 0.0f, 0.0f });
-			}
-
-			//std::vector<std::shared_ptr<GameEngineCollision>> ColTest;
-			//if (Collsion->CollisionAll(2000, ColTest), 0 != ColTest.size())
-			//{
-			//	for (std::shared_ptr<GameEngineCollision> Col : ColTest)
-			//	{
-			//		Col->GetActor()->Death();
-			//	}
-			//	// Col->GetActor()->Death();
-			//}
-
 			float4 Pos = GetTransform()->GetLocalPosition();
 
 			Pos.z -= 100;
@@ -156,6 +75,76 @@ void Player::StateInit()
 	);
 
 
-	FSM.ChangeState("FreeMove");
+	FSM.CreateState(
+		{
+			.Name = "Idle",
+			.Start = [this]()
+			{
 
+			},
+			.Update = [this](float _DeltaTime)
+			{
+				if (true == GameEngineInput::IsDown("MoveLeft"))
+				{
+					FSM.ChangeState("Move");
+					GetTransform()->SetLocalNegativeScaleX();
+				}
+				if (true == GameEngineInput::IsDown("MoveRight"))
+				{
+					FSM.ChangeState("Move");
+					GetTransform()->SetLocalPositiveScaleX();
+				}
+				if (true == GameEngineInput::IsDown("Up"))
+				{
+					return;
+				}
+				if (true == GameEngineInput::IsDown("Down"))
+				{
+					return;
+				}
+				if (true == GameEngineInput::IsDown("Swing"))
+				{
+					FSM.ChangeState("Swing");
+				}
+				if (true == GameEngineInput::IsDown("Jump"))
+				{
+					FSM.ChangeState("Jump");
+				}
+			}
+		}
+
+	);
+
+	FSM.CreateState(
+		{
+			.Name = "Swing",
+			.Start = [this]()
+			{
+
+			},
+			.Update = [this](float _DeltaTime)
+			{
+				FSM.ChangeState("Idle");
+			}
+		}
+
+	);
+
+	FSM.CreateState(
+		{
+			.Name = "Jump",
+			.Start = [this]()
+			{
+
+			},
+			.Update = [this](float _DeltaTime)
+			{
+				FSM.ChangeState("Idle");
+			}
+		}
+
+	);
+	
+	FSM.ChangeState("Idle");
 }
+
