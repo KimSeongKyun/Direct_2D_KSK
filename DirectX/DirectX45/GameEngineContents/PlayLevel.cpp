@@ -10,6 +10,7 @@
 #include <GameEngineCore/GameEngineCoreWindow.h>
 #include <GameEngineCore/GameEngineButton.h>
 #include "FadeEffect.h"
+#include "map.h"
 
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineSprite.h>
@@ -17,6 +18,7 @@
 std::shared_ptr<Player> Object0 = nullptr;
 std::shared_ptr<TestObject> Object1 = nullptr;
 std::shared_ptr<GameEngineSpriteRenderer> RenderTest = nullptr;
+std::shared_ptr<Map> Map0 = nullptr;
 
 PlayLevel::PlayLevel() 
 {
@@ -37,9 +39,11 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Start()
 {
+	//float4 screensize = { GameEngineWindow::GetScreenSize().half().x, GameEngineWindow::GetScreenSize().half().y, -1000.0f };
+	
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0.0f, 0.0f ,-1000.0f });
 	
 
 	//{
@@ -60,9 +64,12 @@ void PlayLevel::Start()
 	//	}
 
 	//}
-
+	Map0 = CreateActor<Map>();
 	Object0 = CreateActor<Player>();
-	Object0->GetTransform()->SetLocalPosition({ -100.0f, 0.0f, 0.0f });
+	Object0->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, 0.0f });
+
+	
+	
 }
 void PlayLevel::LevelChangeStart()
 {

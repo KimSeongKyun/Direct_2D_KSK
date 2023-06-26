@@ -22,6 +22,9 @@
     <ClInclude Include="TileMapLevel.h">
       <Filter>Levels</Filter>
     </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -48,6 +51,9 @@
     <ClCompile Include="Contents_Resources.cpp" />
     <ClCompile Include="TileMapLevel.cpp">
       <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

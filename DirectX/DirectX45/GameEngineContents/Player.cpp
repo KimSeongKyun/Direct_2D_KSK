@@ -27,10 +27,11 @@ Player::~Player()
 void Player::Update(float _DeltaTime)
 {
 
+	PlayerPos = GetTransform()->GetLocalPosition();
 
 	FSM.Update(_DeltaTime);
 	// Pivot2->GetTransform()->AddLocalRotation({0.0f, 90.0f * _DeltaTime, 0.0f});
-//	SubRender->GetTransform()->SetWorldRotation(float4::Zero);
+	//	SubRender->GetTransform()->SetWorldRotation(float4::Zero);
 }
 
 void Player::Start()
@@ -111,44 +112,57 @@ void Player::LevelChangeStart()
 
 	if (nullptr == Body)
 	{
-		Body = CreateComponent<MyContentSpriteRenderer>();
-		Body->CreateAnimation({ .AnimationName = "BodyMove", .SpriteName = "BodyMove", .ScaleToTexture = true });
+		Body = CreateComponent<GameEngineSpriteRenderer>();
+		Body->CreateAnimation({ .AnimationName = "BodyMove", .SpriteName = "BodyMove", .ScaleToTexture = true  });
 		Body->CreateAnimation({ .AnimationName = "BodySwing0", .SpriteName = "BodySwing0", .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodySwing1", .SpriteName = "BodySwing1", .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodySwing2", .SpriteName = "BodySwing2", .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "BodyIdle", .SpriteName = "BodyIdle", .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodyIdle", .SpriteName = "BodyIdle",.FrameInter = 0.4f, .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodyJump", .SpriteName = "BodyJump", .ScaleToTexture = true });
 		//Body->CreateAnimation({ .AnimationName = "BodyDown", .SpriteName = "BodyDown", .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodyRope", .SpriteName = "BodyRope", .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "BodyClimb", .SpriteName = "BodyClimb", .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodyClimb", .SpriteName = "BodyClimb", .ScaleToTexture = true }); 
 		Body->ChangeAnimation("BodyIdle");
+		Body->SetAnimationUpdateEvent("BodyIdle", 0, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody0); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 1, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody1); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 2, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody2); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 3, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody3); });
+		
 		
 
-		Arm = CreateComponent<MyContentSpriteRenderer>();
+		Arm = CreateComponent<GameEngineSpriteRenderer>();
 		Arm->CreateAnimation({ .AnimationName = "ArmSwing0", .SpriteName = "ArmSwing0", .ScaleToTexture = true });
 		Arm->CreateAnimation({ .AnimationName = "ArmSwing1", .SpriteName = "ArmSwing1", .ScaleToTexture = true });
 		Arm->CreateAnimation({ .AnimationName = "ArmSwing2", .SpriteName = "ArmSwing2", .ScaleToTexture = true });
-		Arm->CreateAnimation({ .AnimationName = "ArmIdle", .SpriteName = "ArmIdle", .ScaleToTexture = true });
+		Arm->CreateAnimation({ .AnimationName = "ArmIdle", .SpriteName = "ArmIdle",.FrameInter = 0.4f,.ScaleToTexture = true });
 		Arm->CreateAnimation({ .AnimationName = "ArmJump", .SpriteName = "ArmJump", .ScaleToTexture = true });
 		Arm->CreateAnimation({ .AnimationName = "ArmMove", .SpriteName = "ArmMove", .ScaleToTexture = true });
 		Arm->ChangeAnimation("ArmIdle");
+		Arm->SetAnimationUpdateEvent("ArmIdle", 0, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 1, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 2, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 3, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
 		//Arm->CreateAnimation({ .AnimationName = "ArmDown", .SpriteName = "ArmDown", .ScaleToTexture = true });
 
-		Head = CreateComponent<MyContentSpriteRenderer>();
+		Head = CreateComponent<GameEngineSpriteRenderer>();
 		Head->CreateAnimation({ .AnimationName = "Front", .SpriteName = "Front", .ScaleToTexture = true });
 		Head->CreateAnimation({ .AnimationName = "Back", .SpriteName = "Back", .ScaleToTexture = true });
 		Head->ChangeAnimation("Front");
+		Head->SetAnimationUpdateEvent("Front", 0, [this]() {Head->GetTransform()->SetLocalPosition(PlayerPos + IdleHead); });
 
-		LHand = CreateComponent<MyContentSpriteRenderer>();
+		LHand = CreateComponent<GameEngineSpriteRenderer>();
 		LHand->CreateAnimation({ .AnimationName = "LHandJump", .SpriteName = "LHandJump", .ScaleToTexture = true });
 		LHand->ChangeAnimation("LHandJump");
-
-		RHand = CreateComponent<MyContentSpriteRenderer>();
+		LHand->Off();
+		RHand = CreateComponent<GameEngineSpriteRenderer>();
 		RHand->CreateAnimation({ .AnimationName = "RHandJump", .SpriteName = "RHandJump", .ScaleToTexture = true });
 		RHand->ChangeAnimation("RHandJump");
-		
+		RHand->Off();
 
-		Body->GetTransform()->AddLocalPosition({ -3.0f, -31.0f, 0.0f });
+		/*Body->GetTransform()->AddLocalPosition({ -3.0f, -17.0f});
+		Head->GetTransform()->AddLocalPosition({ { 0.0f, 14.0f } });
+		Arm->GetTransform()->AddLocalPosition({ { 7.0f, -12.0f } });*/
+		
 
 		{
 			Collsion = CreateComponent<GameEngineCollision>();

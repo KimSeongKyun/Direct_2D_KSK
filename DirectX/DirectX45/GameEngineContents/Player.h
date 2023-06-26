@@ -63,7 +63,19 @@ private:
 	//std::shared_ptr<class GameEngineSpriteRenderer> SubRender;
 	GameEngineFSM FSM;
 
-	float Speed = 100.0f;
+	float Speed = 100.0f; \
+	float4 PlayerPos = { 0, 0 };
+	float4 PlyaerSize = { 39, 64 };
 
+	float4 IdleBody0 = { -4.0f, -17.0f };
+	float4 IdleBody1 = { -4.0f, -17.0f };
+	float4 IdleBody2 = { -5.0f, -17.0f };
+	float4 IdleBody3 = { -4.0f, -17.0f };
+
+	float4 IdleArm0 = { 7.0f, -12.0f };
+	
+
+	float4 IdleHead = { 0.0f, 14.0f };
+	
 };
 

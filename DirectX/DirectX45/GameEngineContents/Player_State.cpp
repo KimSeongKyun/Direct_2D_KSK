@@ -24,23 +24,23 @@ void Player::StateInit()
 			.Update = [this](float _DeltaTime)
 		{
 
-			if (false == GameEngineInput::IsDown("MoveLeft") ||
-				false == GameEngineInput::IsDown("MoveRight") ||
-				false == GameEngineInput::IsDown("Up") ||
-				false == GameEngineInput::IsDown("Down") ||
-				false == GameEngineInput::IsDown("Swing") ||
-				false == GameEngineInput::IsDown("Jump"))
+			if (false == GameEngineInput::IsPress("MoveLeft") ||
+				false == GameEngineInput::IsPress("MoveRight") ||
+				false == GameEngineInput::IsPress("Up") ||
+				false == GameEngineInput::IsPress("Down") ||
+				false == GameEngineInput::IsPress("Swing") ||
+				false == GameEngineInput::IsPress("Jump"))
 			{
 				FSM.ChangeState("Idle");
 			}
 
 			if (true == GameEngineInput::IsDown("MoveLeft"))
 			{
-				GetTransform()->SetLocalNegativeScaleX();
+				GetTransform()->SetLocalPositiveScaleX();
 			}
 			if (true == GameEngineInput::IsDown("MoveRight"))
 			{
-				GetTransform()->SetLocalPositiveScaleX();
+				GetTransform()->SetLocalNegativeScaleX();
 			}
 
 			if (true == GameEngineInput::IsPress("MoveLeft"))
@@ -64,7 +64,7 @@ void Player::StateInit()
 
 			Pos.z -= 100;
 
-			GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+			//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
 		},
 			.End = [this]()
@@ -84,15 +84,46 @@ void Player::StateInit()
 			},
 			.Update = [this](float _DeltaTime)
 			{
+				
+
+				
+				/*if (Body->GetCurrentFrame() == 0)
+				{
+					Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody0);
+				}
+				if (Body->GetCurrentFrame() == 1)
+				{
+					Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody1);
+					float4 Bodyloacation = Body->GetTransform()->GetLocalPosition();
+				}
+				if (Body->GetCurrentFrame() == 2)
+				{
+					Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody2);
+				}
+				if (Body->GetCurrentFrame() == 3)
+				{
+					Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody3);
+				}*/
+				
+				
+
+				/*float4 HeadScale = Head->GetTransform()->GetLocalScale();
+				Head->GetTransform()->SetLocalPosition({ HeadScale.hx(), -HeadScale.hy() });
+				Head->GetTransform()->AddLocalPosition({ -19.0f, 17.0f });*/
+
+				
+
+
+
 				if (true == GameEngineInput::IsDown("MoveLeft"))
 				{
 					FSM.ChangeState("Move");
-					GetTransform()->SetLocalNegativeScaleX();
+					GetTransform()->SetLocalPositiveScaleX();
 				}
 				if (true == GameEngineInput::IsDown("MoveRight"))
 				{
 					FSM.ChangeState("Move");
-					GetTransform()->SetLocalPositiveScaleX();
+					GetTransform()->SetLocalNegativeScaleX();
 				}
 				if (true == GameEngineInput::IsDown("Up"))
 				{
