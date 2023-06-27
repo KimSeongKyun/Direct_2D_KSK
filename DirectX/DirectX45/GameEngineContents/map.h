@@ -28,6 +28,6 @@ protected:
 private:
 	std::shared_ptr<class GameEngineSpriteRenderer> BackGround;
 	std::shared_ptr<class GameEngineSpriteRenderer> Ground;
-	std::vector<std::shared_ptr<class portal>> Portal
+	std::vector<std::shared_ptr<class portal>> Portal;
 };
 

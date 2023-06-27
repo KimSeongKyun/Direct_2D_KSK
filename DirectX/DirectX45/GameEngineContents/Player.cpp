@@ -9,6 +9,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineSprite.h>
+#include<GameEngineBase/GameEngineRandom.h>
 
 #include "MyContentSpriteRenderer.h"
 
@@ -99,6 +100,10 @@ void Player::LevelChangeStart()
 		NewDir.Move("Head");
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Back").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Front").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("HeadMove").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("HeadSwing0").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("HeadSwing1").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("HeadSwing2").GetFullPath());
 
 		NewDir.MoveParent();
 		NewDir.Move("LHand");
@@ -115,42 +120,39 @@ void Player::LevelChangeStart()
 		
 
 		Body = CreateComponent<GameEngineSpriteRenderer>();
-		Body->CreateAnimation({ .AnimationName = "BodyMove", .SpriteName = "BodyMove", .ScaleToTexture = true  });
-		Body->CreateAnimation({ .AnimationName = "BodySwing0", .SpriteName = "BodySwing0", .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "BodySwing1", .SpriteName = "BodySwing1", .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "BodySwing2", .SpriteName = "BodySwing2", .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "BodyIdle", .SpriteName = "BodyIdle",.FrameInter = 0.4f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodyMove", .SpriteName = "BodyMove",.FrameInter = 0.2f, .ScaleToTexture = true  });
+		Body->CreateAnimation({ .AnimationName = "BodySwing0", .SpriteName = "BodySwing0",.FrameInter = 0.2f, .Loop = false, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodySwing1", .SpriteName = "BodySwing1", .FrameInter = 0.2f,.Loop = false, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodySwing2", .SpriteName = "BodySwing2", .FrameInter = 0.2f,.Loop = false, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodyIdle", .SpriteName = "BodyIdle",.FrameInter = 0.5f, .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodyJump", .SpriteName = "BodyJump", .ScaleToTexture = true });
 		//Body->CreateAnimation({ .AnimationName = "BodyDown", .SpriteName = "BodyDown", .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "BodyRope", .SpriteName = "BodyRope", .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "BodyRope", .SpriteName = "BodyRope",.FrameInter = 0.5f, .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodyClimb", .SpriteName = "BodyClimb", .ScaleToTexture = true }); 
+		//Body->ChangeAnimation("BodyIdle");
 		Body->ChangeAnimation("BodyIdle");
-		Body->SetAnimationUpdateEvent("BodyIdle", 0, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetWorldPosition() + IdleBody0); });
-		Body->SetAnimationUpdateEvent("BodyIdle", 1, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleBody1); });
-		Body->SetAnimationUpdateEvent("BodyIdle", 2, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleBody2); });
-		Body->SetAnimationUpdateEvent("BodyIdle", 3, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleBody3); });
-		
-		
-
-		Arm = CreateComponent<GameEngineSpriteRenderer>();
-		Arm->CreateAnimation({ .AnimationName = "ArmSwing0", .SpriteName = "ArmSwing0", .ScaleToTexture = true });
-		Arm->CreateAnimation({ .AnimationName = "ArmSwing1", .SpriteName = "ArmSwing1", .ScaleToTexture = true });
-		Arm->CreateAnimation({ .AnimationName = "ArmSwing2", .SpriteName = "ArmSwing2", .ScaleToTexture = true });
-		Arm->CreateAnimation({ .AnimationName = "ArmIdle", .SpriteName = "ArmIdle",.FrameInter = 0.4f,.ScaleToTexture = true });
-		Arm->CreateAnimation({ .AnimationName = "ArmJump", .SpriteName = "ArmJump", .ScaleToTexture = true });
-		Arm->CreateAnimation({ .AnimationName = "ArmMove", .SpriteName = "ArmMove", .ScaleToTexture = true });
-		Arm->ChangeAnimation("ArmIdle");
-		Arm->SetAnimationUpdateEvent("ArmIdle", 0, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
-		Arm->SetAnimationUpdateEvent("ArmIdle", 1, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
-		Arm->SetAnimationUpdateEvent("ArmIdle", 2, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
-		Arm->SetAnimationUpdateEvent("ArmIdle", 3, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
-		//Arm->CreateAnimation({ .AnimationName = "ArmDown", .SpriteName = "ArmDown", .ScaleToTexture = true });
 
 		Head = CreateComponent<GameEngineSpriteRenderer>();
+		Head->CreateAnimation({ .AnimationName = "HeadMove", .SpriteName = "HeadMove", .FrameInter = 0.2f, .ScaleToTexture = true });
+		Head->CreateAnimation({ .AnimationName = "HeadSwing0", .SpriteName = "HeadSwing0", .FrameInter = 0.2f, .Loop = false, .ScaleToTexture = true });
+		Head->CreateAnimation({ .AnimationName = "HeadSwing1", .SpriteName = "HeadSwing1", .FrameInter = 0.2f, .Loop = false, .ScaleToTexture = true });
+		Head->CreateAnimation({ .AnimationName = "HeadSwing2", .SpriteName = "HeadSwing2", .FrameInter = 0.2f, .Loop = false, .ScaleToTexture = true });
 		Head->CreateAnimation({ .AnimationName = "Front", .SpriteName = "Front", .ScaleToTexture = true });
-		Head->CreateAnimation({ .AnimationName = "Back", .SpriteName = "Back", .ScaleToTexture = true });
+		Head->CreateAnimation({ .AnimationName = "Back", .SpriteName = "Back",  .ScaleToTexture = true });
 		Head->ChangeAnimation("Front");
-		Head->SetAnimationUpdateEvent("Front", 0, [this]() {Head->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleHead); });
+
+		Arm = CreateComponent<GameEngineSpriteRenderer>();
+		Arm->CreateAnimation({ .AnimationName = "ArmSwing0", .SpriteName = "ArmSwing0", .FrameInter = 0.2f, .Loop = false, .ScaleToTexture = true });
+		Arm->CreateAnimation({ .AnimationName = "ArmSwing1", .SpriteName = "ArmSwing1",.FrameInter = 0.2f, .Loop = false,  .ScaleToTexture = true });
+		Arm->CreateAnimation({ .AnimationName = "ArmSwing2", .SpriteName = "ArmSwing2",.FrameInter = 0.2f, .Loop = false, .ScaleToTexture = true });
+		Arm->CreateAnimation({ .AnimationName = "ArmIdle", .SpriteName = "ArmIdle",.FrameInter = 0.5f,.ScaleToTexture = true });
+		Arm->CreateAnimation({ .AnimationName = "ArmJump", .SpriteName = "ArmJump", .ScaleToTexture = true });
+		Arm->CreateAnimation({ .AnimationName = "ArmMove", .SpriteName = "ArmMove", .FrameInter = 0.2f,.ScaleToTexture = true });
+		//Arm->ChangeAnimation("ArmIdle");
+		Arm->ChangeAnimation("ArmIdle");
+		//Arm->CreateAnimation({ .AnimationName = "ArmDown", .SpriteName = "ArmDown", .ScaleToTexture = true });
+
+		
 
 		LHand = CreateComponent<GameEngineSpriteRenderer>();
 		LHand->CreateAnimation({ .AnimationName = "LHandJump", .SpriteName = "LHandJump", .ScaleToTexture = true });
@@ -198,53 +200,84 @@ void Player::LevelChangeStart()
 	
 }
 
-void Player::CreateAnimaionPlayer(const std::string _State)
+void Player::RendererStateChange(const std::string _State)
 {
+	if (CurPlayerState == _State)
+	{
+		return;
+	}
+
 	if (_State == "Idle")
 	{
-		Head->ChangeAnimation("Head" + _State);
+		CurPlayerState = _State;
+		Head->ChangeAnimation("Front");
 		Body->ChangeAnimation("Body" + _State);
-		Arm->ChangeAnimation("LArm" + _State);
+		Arm->ChangeAnimation("Arm" + _State);
 		LHand->Off();
 		RHand->Off();
 	}
 	if (_State == "Move")
 	{
+		CurPlayerState = _State;
 		Head->ChangeAnimation("Head" + _State);
 		Body->ChangeAnimation("Body" + _State);
-		Arm->ChangeAnimation("LArm" + _State);
+		Arm->ChangeAnimation("Arm" + _State);
 		LHand->Off();
 		RHand->Off();
 	}
 	if (_State == "Jump")
 	{
+		CurPlayerState = _State;
 		Head->ChangeAnimation("Head" + _State);
 		Body->ChangeAnimation("Body" + _State);
-		Arm->ChangeAnimation("LArm" + _State);
+		Arm->ChangeAnimation("Arm" + _State);
 		LHand->ChangeAnimation("LHand" + _State);
 		RHand->ChangeAnimation("RHand" + _State);
 
 	}
-	if (_State == "Rope")
-	{
-		Head->ChangeAnimation("Head" + _State);
-		Body->ChangeAnimation("Body" + _State);
-		Arm->Off();
-		LHand->Off();
-		RHand->Off();
-	}
+	
 	if (_State == "Swing")
 	{
-		Head->ChangeAnimation("Head" + _State);
-		Body->ChangeAnimation("Body" + _State);
-		Arm->ChangeAnimation("LArm" + _State);
+		CurPlayerState = _State;
+		int SwingNum = GameEngineRandom::MainRandom.RandomInt(0,3);
+
+		if (SwingNum == 0)
+		{
+			Head->ChangeAnimation("HeadSwing0");
+			Body->ChangeAnimation("BodySwing0");
+			Arm->ChangeAnimation("ArmSwing0");
+		}
+
+		if (SwingNum == 1)
+		{
+			Head->ChangeAnimation("HeadSwing1");
+			Body->ChangeAnimation("BodySwing1");
+			Arm->ChangeAnimation("ArmSwing1");
+		}
+
+		if (SwingNum == 2)
+		{
+			Head->ChangeAnimation("HeadSwing2");
+			Body->ChangeAnimation("BodySwing2");
+			Arm->ChangeAnimation("ArmSwing2");
+		}
+		
 		LHand->Off();
 		RHand->Off();
 	}
 	if (_State == "Climb")
 	{
-
-		Head->ChangeAnimation("Head" + _State);
+		CurPlayerState = _State;
+		Head->ChangeAnimation("Back");
+		Body->ChangeAnimation("Body" + _State);
+		Arm->Off();
+		LHand->Off();
+		RHand->Off();
+	}
+	if (_State == "Rope")
+	{
+		CurPlayerState = _State;
+		Head->ChangeAnimation("Back");
 		Body->ChangeAnimation("Body" + _State);
 		Arm->Off();
 		LHand->Off();

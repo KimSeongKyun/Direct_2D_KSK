@@ -40,7 +40,7 @@ public:
 	std::shared_ptr<class GameEngineSpriteRenderer> LHand;
 	std::shared_ptr<class GameEngineSpriteRenderer> RHand;
 	
-	void CreateAnimaionPlayer(const std::string _State);
+	void RendererStateChange(const std::string _State);
 	void TestCallBack();
 
 
@@ -75,7 +75,8 @@ private:
 	
 
 	float4 IdleHead = { 0.0f, 14.0f };
-	
+
+	std::string CurPlayerState = "Idle";
 	
 	
 };

@@ -11,6 +11,7 @@
 #include <GameEngineCore/GameEngineButton.h>
 #include "FadeEffect.h"
 #include "map.h"
+#include "Monster.h"
 
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineSprite.h>
@@ -19,6 +20,7 @@ std::shared_ptr<Player> Object0 = nullptr;
 std::shared_ptr<TestObject> Object1 = nullptr;
 std::shared_ptr<GameEngineSpriteRenderer> RenderTest = nullptr;
 std::shared_ptr<Map> Map0 = nullptr;
+std::shared_ptr<Monster> MonsterObject = nullptr;
 
 PlayLevel::PlayLevel() 
 {
@@ -68,6 +70,8 @@ void PlayLevel::Start()
 	Object0 = CreateActor<Player>();
 	Object0->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, 1.0f });
 
+	MonsterObject = CreateActor<Monster>();
+	MonsterObject->GetTransform()->SetLocalPosition({ 100.0f, -15.0f, 1.0f });
 	
 	
 }

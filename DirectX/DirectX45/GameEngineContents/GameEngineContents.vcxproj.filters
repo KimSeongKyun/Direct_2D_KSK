@@ -25,6 +25,9 @@
     <ClInclude Include="map.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -53,6 +56,9 @@
       <Filter>Levels</Filter>
     </ClCompile>
     <ClCompile Include="map.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
