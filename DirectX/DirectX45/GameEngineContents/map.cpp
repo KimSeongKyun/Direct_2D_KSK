@@ -42,3 +42,20 @@ void Map::Render(float _Delta)
 {
 
 }
+
+void Map::SetGround(const std::string& _Texture)
+{
+	Ground->SetTexture(_Texture + ".png");
+	Ground->SetScaleToTexture(_Texture);
+
+
+}
+void Map::SetBackGround(const std::string& _Texture)
+{
+	BackGround->SetTexture(_Texture + "BackGround.png");
+	BackGround->SetScaleToTexture(_Texture + "BackGround.png");
+}
+void Map::SetPortal()
+{
+
+}

@@ -27,7 +27,7 @@ Player::~Player()
 void Player::Update(float _DeltaTime)
 {
 
-	PlayerPos = GetTransform()->GetLocalPosition();
+	
 
 	FSM.Update(_DeltaTime);
 	// Pivot2->GetTransform()->AddLocalRotation({0.0f, 90.0f * _DeltaTime, 0.0f});
@@ -112,6 +112,8 @@ void Player::LevelChangeStart()
 
 	if (nullptr == Body)
 	{
+		
+
 		Body = CreateComponent<GameEngineSpriteRenderer>();
 		Body->CreateAnimation({ .AnimationName = "BodyMove", .SpriteName = "BodyMove", .ScaleToTexture = true  });
 		Body->CreateAnimation({ .AnimationName = "BodySwing0", .SpriteName = "BodySwing0", .ScaleToTexture = true });
@@ -123,10 +125,10 @@ void Player::LevelChangeStart()
 		Body->CreateAnimation({ .AnimationName = "BodyRope", .SpriteName = "BodyRope", .ScaleToTexture = true });
 		Body->CreateAnimation({ .AnimationName = "BodyClimb", .SpriteName = "BodyClimb", .ScaleToTexture = true }); 
 		Body->ChangeAnimation("BodyIdle");
-		Body->SetAnimationUpdateEvent("BodyIdle", 0, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody0); });
-		Body->SetAnimationUpdateEvent("BodyIdle", 1, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody1); });
-		Body->SetAnimationUpdateEvent("BodyIdle", 2, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody2); });
-		Body->SetAnimationUpdateEvent("BodyIdle", 3, [this]() {Body->GetTransform()->SetLocalPosition(PlayerPos + IdleBody3); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 0, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetWorldPosition() + IdleBody0); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 1, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleBody1); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 2, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleBody2); });
+		Body->SetAnimationUpdateEvent("BodyIdle", 3, [this]() {Body->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleBody3); });
 		
 		
 
@@ -138,17 +140,17 @@ void Player::LevelChangeStart()
 		Arm->CreateAnimation({ .AnimationName = "ArmJump", .SpriteName = "ArmJump", .ScaleToTexture = true });
 		Arm->CreateAnimation({ .AnimationName = "ArmMove", .SpriteName = "ArmMove", .ScaleToTexture = true });
 		Arm->ChangeAnimation("ArmIdle");
-		Arm->SetAnimationUpdateEvent("ArmIdle", 0, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
-		Arm->SetAnimationUpdateEvent("ArmIdle", 1, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
-		Arm->SetAnimationUpdateEvent("ArmIdle", 2, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
-		Arm->SetAnimationUpdateEvent("ArmIdle", 3, [this]() {Arm->GetTransform()->SetLocalPosition(PlayerPos + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 0, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 1, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 2, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
+		Arm->SetAnimationUpdateEvent("ArmIdle", 3, [this]() {Arm->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleArm0); });
 		//Arm->CreateAnimation({ .AnimationName = "ArmDown", .SpriteName = "ArmDown", .ScaleToTexture = true });
 
 		Head = CreateComponent<GameEngineSpriteRenderer>();
 		Head->CreateAnimation({ .AnimationName = "Front", .SpriteName = "Front", .ScaleToTexture = true });
 		Head->CreateAnimation({ .AnimationName = "Back", .SpriteName = "Back", .ScaleToTexture = true });
 		Head->ChangeAnimation("Front");
-		Head->SetAnimationUpdateEvent("Front", 0, [this]() {Head->GetTransform()->SetLocalPosition(PlayerPos + IdleHead); });
+		Head->SetAnimationUpdateEvent("Front", 0, [this]() {Head->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + IdleHead); });
 
 		LHand = CreateComponent<GameEngineSpriteRenderer>();
 		LHand->CreateAnimation({ .AnimationName = "LHandJump", .SpriteName = "LHandJump", .ScaleToTexture = true });
@@ -158,6 +160,7 @@ void Player::LevelChangeStart()
 		RHand->CreateAnimation({ .AnimationName = "RHandJump", .SpriteName = "RHandJump", .ScaleToTexture = true });
 		RHand->ChangeAnimation("RHandJump");
 		RHand->Off();
+
 
 		/*Body->GetTransform()->AddLocalPosition({ -3.0f, -17.0f});
 		Head->GetTransform()->AddLocalPosition({ { 0.0f, 14.0f } });
@@ -253,4 +256,6 @@ void Player::TestCallBack()
 {
 	MsgTextBox("µË´Ï´Ù");
 }
+
+
 

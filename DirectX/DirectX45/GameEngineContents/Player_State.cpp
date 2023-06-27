@@ -23,17 +23,20 @@ void Player::StateInit()
 		},
 			.Update = [this](float _DeltaTime)
 		{
+			
+			
 
-			if (false == GameEngineInput::IsPress("MoveLeft") ||
-				false == GameEngineInput::IsPress("MoveRight") ||
-				false == GameEngineInput::IsPress("Up") ||
-				false == GameEngineInput::IsPress("Down") ||
-				false == GameEngineInput::IsPress("Swing") ||
+			if (false == GameEngineInput::IsPress("MoveLeft") &&
+				false == GameEngineInput::IsPress("MoveRight") &&
+				false == GameEngineInput::IsPress("Up") &&
+				false == GameEngineInput::IsPress("Down") &&
+				false == GameEngineInput::IsPress("Swing") &&
 				false == GameEngineInput::IsPress("Jump"))
 			{
 				FSM.ChangeState("Idle");
 			}
 
+		
 			if (true == GameEngineInput::IsDown("MoveLeft"))
 			{
 				GetTransform()->SetLocalPositiveScaleX();
@@ -50,6 +53,8 @@ void Player::StateInit()
 			if (true == GameEngineInput::IsPress("MoveRight"))
 			{
 				GetTransform()->AddLocalPosition(float4::Right * Speed * _DeltaTime);
+				float4 aaa = GetTransform()->GetLocalScale();
+				int a = 0;
 			}
 		
 			if (true == GameEngineInput::IsUp("MoveLeft"))
@@ -85,7 +90,6 @@ void Player::StateInit()
 			.Update = [this](float _DeltaTime)
 			{
 				
-
 				
 				/*if (Body->GetCurrentFrame() == 0)
 				{
@@ -178,4 +182,8 @@ void Player::StateInit()
 	
 	FSM.ChangeState("Idle");
 }
+
+
+
+
 

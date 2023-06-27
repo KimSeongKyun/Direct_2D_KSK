@@ -43,6 +43,7 @@ public:
 	void CreateAnimaionPlayer(const std::string _State);
 	void TestCallBack();
 
+
 protected:
 	void Start();
 	void Update(float _Delta) override;
@@ -58,13 +59,11 @@ private:
 	float Angle = 0.0f;
 
 	std::shared_ptr<class GameEngineCollision> Collsion;
-	//std::shared_ptr<class GameEngineComponent> Pivot;
-	//std::shared_ptr<class GameEngineComponent> Pivot2;
-	//std::shared_ptr<class GameEngineSpriteRenderer> SubRender;
+	
 	GameEngineFSM FSM;
 
-	float Speed = 100.0f; \
-	float4 PlayerPos = { 0, 0 };
+	float Speed = 100.0f; 
+	
 	float4 PlyaerSize = { 39, 64 };
 
 	float4 IdleBody0 = { -4.0f, -17.0f };
@@ -76,6 +75,8 @@ private:
 	
 
 	float4 IdleHead = { 0.0f, 14.0f };
+	
+	
 	
 };
 

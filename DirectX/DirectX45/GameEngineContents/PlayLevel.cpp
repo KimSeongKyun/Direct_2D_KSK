@@ -66,7 +66,7 @@ void PlayLevel::Start()
 	//}
 	Map0 = CreateActor<Map>();
 	Object0 = CreateActor<Player>();
-	Object0->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, 0.0f });
+	Object0->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, 1.0f });
 
 	
 	
