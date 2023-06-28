@@ -48,14 +48,7 @@ void Player::StateInit()
 				
 			}
 		
-			if (true == GameEngineInput::IsUp("MoveLeft"))
-			{
-				FSM.ChangeState("Idle");
-			}
-			if (true == GameEngineInput::IsUp("MoveRight"))
-			{
-				FSM.ChangeState("Idle");
-			}
+			
 			float4 Pos = GetTransform()->GetLocalPosition();
 
 			Pos.z -= 100;
@@ -99,7 +92,7 @@ void Player::StateInit()
 				{
 					return;
 				}
-				if (true == GameEngineInput::IsDown("Swing"))
+				if (true == GameEngineInput::IsPress("Swing"))
 				{
 					FSM.ChangeState("Swing");
 				}

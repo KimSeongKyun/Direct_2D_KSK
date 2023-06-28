@@ -37,6 +37,8 @@ void PlayLevel::Update(float _DeltaTime)
 		IsDebugSwitch();
 		// GameEngineCore::ChangeLevel("TitleLevel");
 	}
+
+
 }
 
 void PlayLevel::Start()

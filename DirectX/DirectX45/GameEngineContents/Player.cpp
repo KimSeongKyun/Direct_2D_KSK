@@ -239,7 +239,7 @@ void Player::RendererStateChange(const std::string _State)
 	if (_State == "Swing")
 	{
 		CurPlayerState = _State;
-		int SwingNum = GameEngineRandom::MainRandom.RandomInt(0,3);
+		int SwingNum = GameEngineRandom::MainRandom.RandomInt(0,2);
 
 		if (SwingNum == 0)
 		{
