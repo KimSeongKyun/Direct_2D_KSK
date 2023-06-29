@@ -70,7 +70,7 @@ void Player::LevelChangeStart()
 		NewDir.Move("ContentResources");
 		NewDir.Move("Texture");
 		NewDir.Move("Player");
-		NewDir.Move("Arm");
+		NewDir.Move("Arm0");
 		// TestAnimation.png
 
 		//GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArmDown").GetFullPath());
