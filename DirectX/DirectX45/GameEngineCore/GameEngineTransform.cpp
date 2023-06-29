@@ -73,6 +73,7 @@ void TransformData::WorldCalculation(const TransformData& _Parent, bool Absolute
 			WScale = Scale;
 			LScale *= float4::GetSafeScaleReciprocal(_Parent.WorldScale, 0.00001f);
 		}
+		
 
 		Quaternion = Rotation.EulerDegToQuaternion();
 

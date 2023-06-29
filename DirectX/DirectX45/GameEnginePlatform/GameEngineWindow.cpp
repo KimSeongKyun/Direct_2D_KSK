@@ -1,6 +1,7 @@
 #include "PrecompileHeader.h"
 #include "GameEngineWindow.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineBase/GameEngineThread.h>
 #include <GameEnginePlatform/GameEngineImage.h>
 #include "GameEngineInput.h"
 

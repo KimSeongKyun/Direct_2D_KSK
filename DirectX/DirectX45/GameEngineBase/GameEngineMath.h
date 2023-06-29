@@ -101,9 +101,9 @@ public:
 		return GetAngleVectorToVectorRad(_Left, _Right) * GameEngineMath::RadToDeg;
 	}
 
-	static float GetAngleVectorToVectorDeg360(const float4& _Left, const float4& _Right)
+	static float GetAngleVectorToVectorDeg360(const float4& _Pivot, const float4& _Other)
 	{
-		return GetAngleVectorToVectorRad360(_Left, _Right) * GameEngineMath::RadToDeg;
+		return GetAngleVectorToVectorRad360(_Pivot, _Other) * GameEngineMath::RadToDeg;
 	}
 
 	// 외적의 결과는 두개의 백터가 겹칠때 주의해서 처리해줘야 한다.
@@ -792,6 +792,8 @@ public:
 		_Rot.QuaternionToEulerDeg();
 		*this = DirectX::XMMatrixAffineTransformation(_Scale.DirectVector, _Rot.DirectVector, _RotQuaternion.DirectVector, _Pos.DirectVector);
 	}
+
+	
 
 	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos) const
 	{
