@@ -44,8 +44,8 @@ void Player::Start()
 		GameEngineInput::CreateKey("Up", VK_UP);
 		GameEngineInput::CreateKey("Down", VK_DOWN);
 
-		GameEngineInput::CreateKey("Swing", VK_LCONTROL);
-		GameEngineInput::CreateKey("Jump", VK_LMENU);
+		GameEngineInput::CreateKey("Swing", 'Z');
+		GameEngineInput::CreateKey("Jump", 'X');
 
 	}
 
@@ -228,7 +228,7 @@ void Player::RendererStateChange(const std::string _State)
 	if (_State == "Jump")
 	{
 		CurPlayerState = _State;
-		Head->ChangeAnimation("Head" + _State);
+		Head->ChangeAnimation("Front");
 		Body->ChangeAnimation("Body" + _State);
 		Arm->ChangeAnimation("Arm" + _State);
 		LHand->ChangeAnimation("LHand" + _State);

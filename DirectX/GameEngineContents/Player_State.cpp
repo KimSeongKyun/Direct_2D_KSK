@@ -47,7 +47,13 @@ void Player::StateInit()
 				GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);
 				
 			}
-		
+
+			if (true == GameEngineInput::IsPress("Jump"))
+			{
+				FSM.ChangeState("Jump");
+
+			}
+
 			
 			float4 Pos = GetTransform()->GetLocalPosition();
 
@@ -73,6 +79,8 @@ void Player::StateInit()
 			},
 			.Update = [this](float _DeltaTime)
 			{				
+				
+
 				RendererStateChange("Idle");
 				if (true == GameEngineInput::IsDown("MoveLeft"))
 				{
@@ -129,11 +137,31 @@ void Player::StateInit()
 			.Name = "Jump",
 			.Start = [this]()
 			{
-
+				
 			},
 			.Update = [this](float _DeltaTime)
 			{
-				FSM.ChangeState("Idle");
+
+				RendererStateChange("Jump");
+				Gravity += 10 * _DeltaTime;
+				GetTransform()->AddWorldPosition(JumpPower + float4::Down* Gravity);
+
+
+				if (true == GameEngineInput::IsPress("MoveLeft"))
+				{
+					GetTransform()->SetLocalPositiveScaleX();
+					GetTransform()->AddWorldPosition(float4::Left * Speed * _DeltaTime);
+				}
+				if (true == GameEngineInput::IsPress("MoveRight"))
+				{
+					GetTransform()->SetLocalNegativeScaleX();
+					GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);
+
+				}
+				
+				
+				
+					
 			}
 		}
 

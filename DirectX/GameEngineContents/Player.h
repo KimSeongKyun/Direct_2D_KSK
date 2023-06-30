@@ -77,7 +77,8 @@ private:
 	float4 IdleHead = { 0.0f, 14.0f };
 
 	std::string CurPlayerState = "Idle";
-	
+	float Gravity = 0.0f;
+	float4 JumpPower = { 0, 4, 0 };
 	
 };
 
