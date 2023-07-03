@@ -49,6 +49,8 @@ void Player::Start()
 
 	}
 
+	PlayerHalfValue = { GetTransform()->GetWorldScale().hx(), GetTransform()->GetWorldScale().hy() };
+	
 
 	StateInit();
 }

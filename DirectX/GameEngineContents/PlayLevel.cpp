@@ -9,18 +9,15 @@
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineCoreWindow.h>
 #include <GameEngineCore/GameEngineButton.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
 #include "FadeEffect.h"
-#include "map.h"
+#include "Map.h"
 #include "Monster.h"
 
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineSprite.h>
 
-std::shared_ptr<Player> Object0 = nullptr;
-std::shared_ptr<TestObject> Object1 = nullptr;
-std::shared_ptr<GameEngineSpriteRenderer> RenderTest = nullptr;
-std::shared_ptr<Map> Map0 = nullptr;
-std::shared_ptr<Monster> MonsterObject = nullptr;
+
 
 PlayLevel::PlayLevel() 
 {
@@ -29,6 +26,8 @@ PlayLevel::PlayLevel()
 PlayLevel::~PlayLevel() 
 {
 }
+
+
 
 void PlayLevel::Update(float _DeltaTime)
 {
@@ -47,7 +46,8 @@ void PlayLevel::Start()
 	
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0.0f, 0.0f ,-1000.0f });
+	//GetMainCamera()->GetTransform()->SetLocalPosition({ 0.0f, 0.0f ,-1000.0f });
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0,-1000.0f});
 	
 
 	//{
@@ -70,10 +70,13 @@ void PlayLevel::Start()
 	//}
 	Map0 = CreateActor<Map>();
 	Object0 = CreateActor<Player>();
-	Object0->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+	Object0->GetTransform()->SetWorldPosition({ 0.0f, 900.0f, 1.0f });
+	Object0->SetColMap("ColEllinia0.png");
+
+	
 
 	MonsterObject = CreateActor<Monster>();
-	MonsterObject->GetTransform()->SetLocalPosition({ 100.0f, -15.0f, 1.0f });
+	MonsterObject->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
 	
 	
 }
@@ -87,4 +90,9 @@ void PlayLevel::LevelChangeEnd()
 {
 	GameEngineLevel::LevelChangeEnd();
 	int a = 0;
+}
+
+std::shared_ptr<Map> PlayLevel::GetMap()
+{
+	return Map0;
 }

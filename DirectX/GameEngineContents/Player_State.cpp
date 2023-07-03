@@ -9,6 +9,9 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineSprite.h>
+#include "Map.h"
+#include "PlayLevel.h"
+
 
 
 
@@ -23,8 +26,30 @@ void Player::StateInit()
 		},
 			.Update = [this](float _DeltaTime)
 		{
-			
-			
+			PlayerGravity = true;
+
+			if (PlayerGravity == true)
+			{
+				Gravity += 10 * _DeltaTime;
+
+				if (Gravity > 5.0f)
+				{
+					Gravity = 5.0f;
+				}
+
+				float4 CurPosition = GetTransform()->GetWorldPosition();
+				GetTransform()->AddWorldPosition(float4::Down * Gravity);
+
+				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+				float4 NextPosition = CurPosition + (float4::Down * Gravity);
+
+				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+				{
+					GetTransform()->SetWorldPosition(CurPosition);
+					PlayerGravity = false;
+					Gravity = 0.0f;
+				}
+			}
 
 			if (false == GameEngineInput::IsPress("MoveLeft") &&
 				false == GameEngineInput::IsPress("MoveRight") &&
@@ -50,8 +75,8 @@ void Player::StateInit()
 
 			if (true == GameEngineInput::IsPress("Jump"))
 			{
+				PlayerGravity = true;
 				FSM.ChangeState("Jump");
-
 			}
 
 			
@@ -59,7 +84,7 @@ void Player::StateInit()
 
 			Pos.z -= 100;
 
-			//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+			GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
 		},
 			.End = [this]()
@@ -79,8 +104,30 @@ void Player::StateInit()
 			},
 			.Update = [this](float _DeltaTime)
 			{				
-				
+				PlayerGravity = true;
 
+				if (PlayerGravity == true)
+				{
+					Gravity += 10 * _DeltaTime;
+
+					if (Gravity > 5.0f)
+					{
+						Gravity = 5.0f;
+					}
+
+					float4 CurPosition = GetTransform()->GetWorldPosition();
+					GetTransform()->AddWorldPosition(float4::Down * Gravity);
+
+					float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+					float4 NextPosition = CurPosition + (float4::Down * Gravity);
+
+					if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+					{
+						GetTransform()->SetWorldPosition(CurPosition);
+						PlayerGravity = false;
+						Gravity = 0.0f;
+					}
+				}
 				RendererStateChange("Idle");
 				if (true == GameEngineInput::IsDown("MoveLeft"))
 				{
@@ -106,8 +153,13 @@ void Player::StateInit()
 				}
 				if (true == GameEngineInput::IsDown("Jump"))
 				{
+					PlayerGravity = true;
 					FSM.ChangeState("Jump");
 				}
+				float4 Pos = GetTransform()->GetLocalPosition();
+
+				Pos.z -= 100;
+				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
@@ -127,6 +179,10 @@ void Player::StateInit()
 					RendererStateChange("Idle");
 					FSM.ChangeState("Idle");
 				}
+				float4 Pos = GetTransform()->GetLocalPosition();
+
+				Pos.z -= 100;
+				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
@@ -137,36 +193,63 @@ void Player::StateInit()
 			.Name = "Jump",
 			.Start = [this]()
 			{
-				
+				int a = 0;
 			},
 			.Update = [this](float _DeltaTime)
 			{
-
-				RendererStateChange("Jump");
-				Gravity += 10 * _DeltaTime;
-				GetTransform()->AddWorldPosition(JumpPower + float4::Down* Gravity);
-
-
-				if (true == GameEngineInput::IsPress("MoveLeft"))
+				if (PlayerGravity == true)
 				{
-					GetTransform()->SetLocalPositiveScaleX();
-					GetTransform()->AddWorldPosition(float4::Left * Speed * _DeltaTime);
-				}
-				if (true == GameEngineInput::IsPress("MoveRight"))
-				{
-					GetTransform()->SetLocalNegativeScaleX();
-					GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);
+					RendererStateChange("Jump");
 
-				}
-				
-				
-				
+					Gravity += 10 * _DeltaTime;
+					if (Gravity > 9.0f)
+					{
+						Gravity = 9.0f;
+					}
+
+					float4 CurPosition = GetTransform()->GetWorldPosition();
+					GetTransform()->AddWorldPosition(JumpPower + (float4::Down * Gravity));					
 					
+					float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+					float4 NextPosition = CurPosition + (JumpPower + (float4::Down * Gravity));							
+
+					if (true == GameEngineInput::IsPress("MoveLeft"))
+					{
+
+						GetTransform()->SetLocalPositiveScaleX();
+						GetTransform()->AddWorldPosition(float4::Left * Speed * _DeltaTime);						
+						
+						float4 NextPosition = NextPosition + (float4::Left * Speed * _DeltaTime);												
+					}
+
+					if (true == GameEngineInput::IsPress("MoveRight"))
+					{
+						GetTransform()->SetLocalNegativeScaleX();
+						GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);					
+						
+						float4 NextPosition = NextPosition + (float4::Right * Speed * _DeltaTime);						
+					}
+
+					if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+					{
+						GetTransform()->SetWorldPosition(CurPosition);
+						PlayerGravity = false;
+						Gravity = 0.0f;
+						FSM.ChangeState("Move");
+					}
+				}
+
+				float4 Pos = GetTransform()->GetLocalPosition();
+
+				Pos.z -= 100;
+				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
 	);
+	 
 	
+
 	FSM.ChangeState("Idle");
 }
 

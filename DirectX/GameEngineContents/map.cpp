@@ -1,6 +1,9 @@
 #include "PrecompileHeader.h"
-#include "map.h"
+#include "Map.h"
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+#include <GameEngineCore/GameEngineTexture.h>
+
+Map* Map::MainMap = nullptr;
 
 Map::Map()
 {
@@ -31,6 +34,7 @@ void Map::Start()
 	Ground->SetTexture("Ellinia0.png");
 	Ground->SetScaleToTexture("Ellinia0.png");
 	Ground->GetTransform()->SetLocalPosition({ 0, 0, -100.0f });
+	SetColMap("ColEllinia0.png");
 	
 }
 
@@ -59,3 +63,14 @@ void Map::SetPortal()
 {
 
 }
+
+void Map::SetColMap(const std::string& _ColMap)
+{
+	ColMap->GameEngineTexture::Find(_ColMap);
+}
+
+std::shared_ptr<class GameEngineTexture> Map::GetColMap()
+{
+	return ColMap;
+}
+

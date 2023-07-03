@@ -42,15 +42,14 @@ public:
 	
 	void RendererStateChange(const std::string _State);
 	void TestCallBack();
+	void SetColMap(const std::string_view& _ColMap) { ColMap = GameEngineTexture::Find(_ColMap);};
 
 
 protected:
 	void Start();
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
-
 	void LevelChangeStart() override;
-	
 	void StateInit();
 
 	float4 TestColor;
@@ -60,11 +59,12 @@ private:
 
 	std::shared_ptr<class GameEngineCollision> Collsion;
 	
+	
 	GameEngineFSM FSM;
 
 	float Speed = 100.0f; 
 	
-	float4 PlyaerSize = { 39, 64 };
+	float4 PlayerSize = { 39, 64 };
 
 	float4 IdleBody0 = { -4.0f, -17.0f };
 	float4 IdleBody1 = { -4.0f, -17.0f };
@@ -79,6 +79,10 @@ private:
 	std::string CurPlayerState = "Idle";
 	float Gravity = 0.0f;
 	float4 JumpPower = { 0, 4, 0 };
+	bool PlayerGravity = false;
+	std::shared_ptr<class GameEngineTexture> ColMap;
+	GameEnginePixelColor ColColor = { (char)255, (char)0, (char)255,(char)255 };
+	float4 PlayerHalfValue;
 	
 };
 
