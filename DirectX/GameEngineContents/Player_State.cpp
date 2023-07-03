@@ -11,6 +11,7 @@
 #include <GameEngineCore/GameEngineSprite.h>
 #include "Map.h"
 #include "PlayLevel.h"
+#include "ObjectEnum.h"
 
 
 
@@ -79,6 +80,21 @@ void Player::StateInit()
 				FSM.ChangeState("Jump");
 			}
 
+			if (true == GameEngineInput::IsDown("Up"))
+			{
+				ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+
+				if (ColRope == nullptr)
+				{
+					return;
+				}
+
+				float4 PlayerPos = GetTransform()->GetWorldPosition();
+				float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+				GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+
+				FSM.ChangeState("Rope");
+			}
 			
 			float4 Pos = GetTransform()->GetLocalPosition();
 
@@ -141,7 +157,17 @@ void Player::StateInit()
 				}
 				if (true == GameEngineInput::IsDown("Up"))
 				{
-					return;
+					ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+
+					if (ColRope == nullptr)
+					{
+						return;
+					}
+
+					float4 PlayerPos = GetTransform()->GetWorldPosition();
+					float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+					GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+					FSM.ChangeState("Rope");
 				}
 				if (true == GameEngineInput::IsDown("Down"))
 				{
@@ -237,6 +263,21 @@ void Player::StateInit()
 						Gravity = 0.0f;
 						FSM.ChangeState("Move");
 					}
+					if (true == GameEngineInput::IsDown("Up"))
+					{
+						ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+
+						if (ColRope == nullptr)
+						{
+							return;
+						}
+
+						float4 PlayerPos = GetTransform()->GetWorldPosition();
+						float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+						GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+
+						FSM.ChangeState("Rope");
+					}
 				}
 
 				float4 Pos = GetTransform()->GetLocalPosition();
@@ -248,7 +289,34 @@ void Player::StateInit()
 
 	);
 	 
-	
+	FSM.CreateState(
+		{
+			.Name = "Rope",
+			.Start = [this]()
+		{
+			RendererStateChange("Rope");
+		},
+			.Update = [this](float _DeltaTime)
+		{
+			PlayerGravity = false;
+
+			if (true == GameEngineInput::IsDown("Up"))
+			{
+				GetTransform()->AddWorldPosition(float4::Up* Speed* _DeltaTime);
+			}
+			if (true == GameEngineInput::IsDown("Down"))
+			{
+				GetTransform()->AddWorldPosition(float4::Down* Speed * _DeltaTime);
+			}
+
+			if (true == GameEngineInput::IsDown("Jump"))
+			{
+				FSM.ChangeState("Jump");
+			}
+
+		}
+		}
+	);
 
 	FSM.ChangeState("Idle");
 }

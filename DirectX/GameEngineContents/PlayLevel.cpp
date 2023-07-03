@@ -92,7 +92,3 @@ void PlayLevel::LevelChangeEnd()
 	int a = 0;
 }
 
-std::shared_ptr<Map> PlayLevel::GetMap()
-{
-	return Map0;
-}

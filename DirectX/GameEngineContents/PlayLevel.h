@@ -19,7 +19,7 @@ public:
 	std::shared_ptr<class GameEngineVideo> Video;
 	std::shared_ptr<class TestObject> Object3;
 	std::shared_ptr<class FadeEffect> FEffect;
-	std::shared_ptr<class Map> GetMap();
+	
 
 protected:
 	void Update(float _DeltaTime) override;

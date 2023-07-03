@@ -172,9 +172,9 @@ void Player::LevelChangeStart()
 		
 
 		{
-			Collsion = CreateComponent<GameEngineCollision>();
-			Collsion->GetTransform()->SetLocalScale({ 10.0f, 100.0f, 100.0f });
-			Collsion->SetOrder(3000);
+			ColRope = CreateComponent<GameEngineCollision>();
+			ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
+			ColRope->SetOrder(3000);
 		}
 
 	}

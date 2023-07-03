@@ -200,6 +200,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ObjectEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">

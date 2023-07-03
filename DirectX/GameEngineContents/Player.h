@@ -57,7 +57,7 @@ protected:
 private:
 	float Angle = 0.0f;
 
-	std::shared_ptr<class GameEngineCollision> Collsion;
+	std::shared_ptr<class GameEngineCollision> ColRope;
 	
 	
 	GameEngineFSM FSM;
