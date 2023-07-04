@@ -64,7 +64,7 @@ private:
 
 	float Speed = 100.0f; 
 	
-	float4 PlayerSize = { 39, 64 };
+	float4 PlayerSize = { 39.0f, 64.0f };
 
 	float4 IdleBody0 = { -4.0f, -17.0f };
 	float4 IdleBody1 = { -4.0f, -17.0f };

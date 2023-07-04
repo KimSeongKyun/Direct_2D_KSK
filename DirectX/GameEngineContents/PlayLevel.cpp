@@ -47,7 +47,7 @@ void PlayLevel::Start()
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	//GetMainCamera()->GetTransform()->SetLocalPosition({ 0.0f, 0.0f ,-1000.0f });
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0,-1000.0f});
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 900,-1000.0f});
 	
 
 	//{

@@ -29,6 +29,8 @@ void Player::StateInit()
 		{
 			PlayerGravity = true;
 
+			
+
 			if (PlayerGravity == true)
 			{
 				Gravity += 10 * _DeltaTime;
@@ -37,11 +39,11 @@ void Player::StateInit()
 				{
 					Gravity = 5.0f;
 				}
-
 				float4 CurPosition = GetTransform()->GetWorldPosition();
-				GetTransform()->AddWorldPosition(float4::Down * Gravity);
-
 				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+				
+				
+				GetTransform()->AddWorldPosition(float4::Down * Gravity);
 				float4 NextPosition = CurPosition + (float4::Down * Gravity);
 
 				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
@@ -64,14 +66,67 @@ void Player::StateInit()
 
 			if (true == GameEngineInput::IsPress("MoveLeft"))
 			{
+
+				float4 CurPosition = GetTransform()->GetWorldPosition();
+				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+				
 				GetTransform()->SetLocalPositiveScaleX();
 				GetTransform()->AddWorldPosition(float4::Left * Speed * _DeltaTime);
+				float4 NextPosition = CurPosition + float4::Left * Speed * _DeltaTime;
+
+				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+				{
+					for (float i = 1.0f; i <= 5.0f; i += _DeltaTime)
+					{
+						NextPosition += float4::Up * i;
+						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) != ColColor)
+						{
+							GetTransform()->SetWorldPosition(NextPosition);
+							break;
+						}
+
+						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+						{
+							if (i == 5.0f)
+							{
+								GetTransform()->SetWorldPosition(CurPosition);
+							}
+							continue;
+						}
+					}
+				}
 			}
+
 			if (true == GameEngineInput::IsPress("MoveRight"))
 			{
+				float4 CurPosition = GetTransform()->GetWorldPosition();
+				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+			
 				GetTransform()->SetLocalNegativeScaleX();
 				GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);
-				
+
+				float4 NextPosition = CurPosition + float4::Right * Speed * _DeltaTime;
+				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+				{
+					for (float i = 1.0f; i <= 5.0f; i +=  _DeltaTime)
+					{
+						NextPosition += float4::Up * i;
+						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) != ColColor)
+						{
+							GetTransform()->SetWorldPosition(NextPosition);
+							break;
+						}
+
+						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+						{
+							if (i == 5.0f)
+							{
+								GetTransform()->SetWorldPosition(CurPosition);
+							}
+							continue;
+						}
+					}
+				}
 			}
 
 			if (true == GameEngineInput::IsPress("Jump"))
@@ -100,7 +155,7 @@ void Player::StateInit()
 
 			Pos.z -= 100;
 
-			GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+			//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
 		},
 			.End = [this]()
@@ -185,7 +240,7 @@ void Player::StateInit()
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
-				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+				//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
@@ -208,7 +263,7 @@ void Player::StateInit()
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
-				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+				//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
@@ -233,6 +288,7 @@ void Player::StateInit()
 						Gravity = 9.0f;
 					}
 
+					float4 PlayerGravityValue = JumpPower + (float4::Down * Gravity);
 					float4 CurPosition = GetTransform()->GetWorldPosition();
 					GetTransform()->AddWorldPosition(JumpPower + (float4::Down * Gravity));					
 					
@@ -245,7 +301,7 @@ void Player::StateInit()
 						GetTransform()->SetLocalPositiveScaleX();
 						GetTransform()->AddWorldPosition(float4::Left * Speed * _DeltaTime);						
 						
-						float4 NextPosition = NextPosition + (float4::Left * Speed * _DeltaTime);												
+						NextPosition += float4::Left * Speed * _DeltaTime;												
 					}
 
 					if (true == GameEngineInput::IsPress("MoveRight"))
@@ -253,16 +309,25 @@ void Player::StateInit()
 						GetTransform()->SetLocalNegativeScaleX();
 						GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);					
 						
-						float4 NextPosition = NextPosition + (float4::Right * Speed * _DeltaTime);						
+						NextPosition += float4::Right * Speed * _DeltaTime;
 					}
 
-					if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+					if (PlayerGravityValue.x <= 0)
 					{
-						GetTransform()->SetWorldPosition(CurPosition);
-						PlayerGravity = false;
-						Gravity = 0.0f;
-						FSM.ChangeState("Move");
+
+						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+						{
+							if(ColMap->GetPixel(ColMapDif.ix() + CurPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - CurPosition.iy()) != ColColor)
+							{ 
+								GetTransform()->SetWorldPosition(CurPosition);
+								PlayerGravity = false;
+								Gravity = 0.0f;
+								FSM.ChangeState("Move");
+							}
+						}
+
 					}
+
 					if (true == GameEngineInput::IsDown("Up"))
 					{
 						ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
@@ -283,7 +348,7 @@ void Player::StateInit()
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
-				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+				//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
