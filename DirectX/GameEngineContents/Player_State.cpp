@@ -137,18 +137,16 @@ void Player::StateInit()
 
 			if (true == GameEngineInput::IsDown("Up"))
 			{
-				ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+				std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
 
-				if (ColRope == nullptr)
+				if (isColRope != nullptr)
 				{
-					return;
+					float4 PlayerPos = GetTransform()->GetWorldPosition();
+					float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+					GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+
+					FSM.ChangeState("Rope");
 				}
-
-				float4 PlayerPos = GetTransform()->GetWorldPosition();
-				float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
-				GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
-
-				FSM.ChangeState("Rope");
 			}
 			
 			float4 Pos = GetTransform()->GetLocalPosition();
@@ -212,17 +210,18 @@ void Player::StateInit()
 				}
 				if (true == GameEngineInput::IsDown("Up"))
 				{
-					ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+					
+					std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
 
-					if (ColRope == nullptr)
+					if (isColRope != nullptr)
 					{
-						return;
+						float4 PlayerPos = GetTransform()->GetWorldPosition();
+						float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+						GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+						FSM.ChangeState("Rope");
 					}
 
-					float4 PlayerPos = GetTransform()->GetWorldPosition();
-					float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
-					GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
-					FSM.ChangeState("Rope");
+					
 				}
 				if (true == GameEngineInput::IsDown("Down"))
 				{
@@ -330,18 +329,17 @@ void Player::StateInit()
 
 					if (true == GameEngineInput::IsDown("Up"))
 					{
-						ColRope->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+						std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
 
-						if (ColRope == nullptr)
+						if (isColRope != nullptr)
 						{
-							return;
+							float4 PlayerPos = GetTransform()->GetWorldPosition();
+							float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+							GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+
+							FSM.ChangeState("Rope");
 						}
 
-						float4 PlayerPos = GetTransform()->GetWorldPosition();
-						float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
-						GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
-
-						FSM.ChangeState("Rope");
 					}
 				}
 

@@ -13,6 +13,8 @@
 
 #include "MyContentSpriteRenderer.h"
 
+#include "ObjectEnum.h"
+
 Player* Player::MainPlayer = nullptr;
 
 Player::Player()
@@ -174,7 +176,8 @@ void Player::LevelChangeStart()
 		{
 			ColRope = CreateComponent<GameEngineCollision>();
 			ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
-			ColRope->SetOrder(3000);
+			ColRope->SetOrder(static_cast<int>(ObjectEnum::Player));
+			
 		}
 
 	}
