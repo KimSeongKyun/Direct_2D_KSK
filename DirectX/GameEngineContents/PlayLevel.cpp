@@ -83,7 +83,7 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	GameEngineLevel::LevelChangeStart();
-	int a = 0;
+	
 }
 
 void PlayLevel::LevelChangeEnd() 
