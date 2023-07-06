@@ -34,12 +34,8 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 	std::shared_ptr<class GameEngineSpriteRenderer> MainRenderer;
-	std::shared_ptr<class GameEngineSpriteRenderer> Head;
 	std::shared_ptr<class GameEngineSpriteRenderer> Body;
-	std::shared_ptr<class GameEngineSpriteRenderer> Arm;
-	std::shared_ptr<class GameEngineSpriteRenderer> LHand;
-	std::shared_ptr<class GameEngineSpriteRenderer> RHand;
-	
+
 	void RendererStateChange(const std::string _State);
 	void TestCallBack();
 	void SetColMap(const std::string_view& _ColMap) { ColMap = GameEngineTexture::Find(_ColMap);};
@@ -64,7 +60,7 @@ private:
 
 	float Speed = 100.0f; 
 	
-	float4 PlayerSize = { 39.0f, 64.0f };
+	float4 PlayerSize = { 39.0f, 92.0f };
 
 	float4 IdleBody0 = { -4.0f, -17.0f };
 	float4 IdleBody1 = { -4.0f, -17.0f };

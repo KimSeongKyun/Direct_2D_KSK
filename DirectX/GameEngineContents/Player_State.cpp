@@ -54,15 +54,7 @@ void Player::StateInit()
 				}
 			}
 
-			if (false == GameEngineInput::IsPress("MoveLeft") &&
-				false == GameEngineInput::IsPress("MoveRight") &&
-				false == GameEngineInput::IsPress("Up") &&
-				false == GameEngineInput::IsPress("Down") &&
-				false == GameEngineInput::IsPress("Swing") &&
-				false == GameEngineInput::IsPress("Jump"))
-			{
-				FSM.ChangeState("Idle");
-			}
+			
 
 			if (true == GameEngineInput::IsPress("MoveLeft"))
 			{
@@ -153,6 +145,16 @@ void Player::StateInit()
 
 			Pos.z -= 100;
 
+			if (false == GameEngineInput::IsPress("MoveLeft") &&
+				false == GameEngineInput::IsPress("MoveRight") &&
+				false == GameEngineInput::IsPress("Up") &&
+				false == GameEngineInput::IsPress("Down") &&
+				false == GameEngineInput::IsPress("Swing") &&
+				false == GameEngineInput::IsPress("Jump"))
+			{
+				FSM.ChangeState("Idle");
+			}
+
 			//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
 		},
@@ -169,7 +171,7 @@ void Player::StateInit()
 			.Name = "Idle",
 			.Start = [this]()
 			{
-				
+					RendererStateChange("Idle");
 			},
 			.Update = [this](float _DeltaTime)
 			{				
