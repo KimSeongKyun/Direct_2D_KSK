@@ -108,7 +108,7 @@ void Player::LevelChangeStart()
 
 		}
 
-		GameEnginePixelColor TestColor = ColMap->GetPixel(138, 420);
+		GameEnginePixelColor TestColor = ColMap->GetPixel(62, 424);
 
 		if (TestColor == ColColor)
 		{

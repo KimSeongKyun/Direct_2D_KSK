@@ -283,7 +283,16 @@ GameEnginePixelColor GameEngineTexture::GetPixel(int _X, int _Y, GameEnginePixel
 	case DXGI_FORMAT_R8G8B8A8_TYPELESS:
 		break;
 	case DXGI_FORMAT_R8G8B8A8_UNORM:
-		break;
+	{
+		int Index = _Y * static_cast<int>(GetWidth()) + _X;
+		ColorPtr = ColorPtr + (Index * 4);
+		GameEnginePixelColor Return;
+		Return.r = ColorPtr[0];
+		Return.g = ColorPtr[1];
+		Return.b = ColorPtr[2];
+		Return.a = ColorPtr[3];
+		return Return;
+	}
 	case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
 		break;
 	case DXGI_FORMAT_R8G8B8A8_UINT:
