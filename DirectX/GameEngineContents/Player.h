@@ -39,6 +39,7 @@ public:
 	void RendererStateChange(const std::string _State);
 	void TestCallBack();
 	void SetColMap(const std::string_view& _ColMap) { ColMap = GameEngineTexture::Find(_ColMap);};
+	std::shared_ptr<class GameEngineTexture> GetColMap() { return ColMap; };
 
 
 protected:

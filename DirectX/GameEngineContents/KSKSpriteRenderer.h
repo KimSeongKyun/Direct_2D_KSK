@@ -3,7 +3,7 @@
 
 
 // Ό³Έν :
-class MyContentSpriteRenderer : public GameEngineSpriteRenderer
+class KSKSpriteRenderer : public GameEngineSpriteRenderer
 {
 public:
 	void Start() override;
@@ -12,8 +12,8 @@ public:
 
 public:
 	// constrcuter destructer
-	MyContentSpriteRenderer();
-	~MyContentSpriteRenderer();
+	KSKSpriteRenderer();
+	~KSKSpriteRenderer();
 
 };
 

@@ -155,7 +155,7 @@ void Player::StateInit()
 				FSM.ChangeState("Idle");
 			}
 
-			//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+			GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
 		},
 			.End = [this]()
@@ -241,7 +241,7 @@ void Player::StateInit()
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
-				//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
@@ -264,7 +264,7 @@ void Player::StateInit()
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
-				//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 
@@ -348,7 +348,7 @@ void Player::StateInit()
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
-				//GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 			}
 		}
 

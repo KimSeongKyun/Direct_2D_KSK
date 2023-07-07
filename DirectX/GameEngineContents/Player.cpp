@@ -11,7 +11,7 @@
 #include <GameEngineCore/GameEngineSprite.h>
 #include<GameEngineBase/GameEngineRandom.h>
 
-#include "MyContentSpriteRenderer.h"
+#include "KSKSpriteRenderer.h"
 
 #include "ObjectEnum.h"
 
@@ -66,7 +66,7 @@ void Player::Render(float _Delta)
 void Player::LevelChangeStart()
 {
 
-	if (nullptr == GameEngineSprite::Find("ArmIdle"))
+	if (nullptr == GameEngineSprite::Find("Idle0.png"))
 	{
 		GameEngineDirectory NewDir;
 
@@ -108,8 +108,13 @@ void Player::LevelChangeStart()
 
 		}
 
-	
+		GameEnginePixelColor TestColor = ColMap->GetPixel(138, 420);
 
+		if (TestColor == ColColor)
+		{
+			int a = 0;
+		}
+		int a = 0;
 
 	}
 }

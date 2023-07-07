@@ -15,7 +15,7 @@
     <ClInclude Include="PlayLevelUIActor.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="MyContentSpriteRenderer.h" />
+    <ClInclude Include="KSKSpriteRenderer.h" />
     <ClInclude Include="FadeEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
@@ -47,7 +47,7 @@
     <ClCompile Include="PlayLevelUIActor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="MyContentSpriteRenderer.cpp" />
+    <ClCompile Include="KSKSpriteRenderer.cpp" />
     <ClCompile Include="FadeEffect.cpp">
       <Filter>PostEffect</Filter>
     </ClCompile>

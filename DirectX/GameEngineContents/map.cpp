@@ -27,14 +27,14 @@ void Map::Start()
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("BackGround").GetFullPath());
 	}
 	BackGround = CreateComponent<GameEngineSpriteRenderer>();
-	BackGround->SetTexture("ElliniaBackGround.png");
-	BackGround->SetScaleToTexture("ElliniaBackGround.png");
-	BackGround->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	BackGround->SetTexture("ElliniaBackGround1.png");
+	BackGround->SetScaleToTexture("ElliniaBackGround1.png");
+	BackGround->GetTransform()->SetWorldPosition({ 0, 0, -1000.0f });
 	Ground = CreateComponent<GameEngineSpriteRenderer>();
-	Ground->SetTexture("Ellinia0.png");
-	Ground->SetScaleToTexture("Ellinia0.png");
-	Ground->GetTransform()->SetLocalPosition({ 0, 0, -100.0f });
-	SetColMap("ColEllinia0.png");
+	Ground->SetTexture("Ellinia1.png");
+	Ground->SetScaleToTexture("Ellinia1.png");
+	Ground->GetTransform()->SetWorldPosition({ 0, 0, -100.0f });
+	
 	
 }
 
@@ -64,13 +64,6 @@ void Map::SetPortal()
 
 }
 
-void Map::SetColMap(const std::string& _ColMap)
-{
-	ColMap->GameEngineTexture::Find(_ColMap);
-}
 
-std::shared_ptr<class GameEngineTexture> Map::GetColMap()
-{
-	return ColMap;
-}
+
 

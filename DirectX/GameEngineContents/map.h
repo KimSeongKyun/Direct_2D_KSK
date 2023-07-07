@@ -24,8 +24,7 @@ public:
 	void SetGround(const std::string& _Texture);
 	void SetBackGround(const std::string& _Texture);
 	void SetPortal();
-	void SetColMap(const std::string& _ColMap);
-	std::shared_ptr<class GameEngineTexture> GetColMap();
+	
 
 protected:
 
@@ -33,6 +32,6 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> BackGround;
 	std::shared_ptr<class GameEngineSpriteRenderer> Ground;
 	std::vector<std::shared_ptr<class portal>> Portal;
-	std::shared_ptr<class GameEngineTexture> ColMap;
+	
 };
 

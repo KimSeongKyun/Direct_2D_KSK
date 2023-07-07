@@ -69,10 +69,10 @@ void PlayLevel::Start()
 
 	//}
 	Map0 = CreateActor<Map>();
-	Object0 = CreateActor<Player>();
-	Object0->GetTransform()->SetWorldPosition({ 0.0f, 900.0f, 1.0f });
-	Object0->SetColMap("ColEllinia0.png");
-
+	Map0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
+	Player0 = CreateActor<Player>();
+	Player0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
+	Player0->SetColMap("ColEllinia1.png");
 	
 
 	MonsterObject = CreateActor<Monster>();
@@ -89,6 +89,6 @@ void PlayLevel::LevelChangeStart()
 void PlayLevel::LevelChangeEnd() 
 {
 	GameEngineLevel::LevelChangeEnd();
-	int a = 0;
+	
 }
 

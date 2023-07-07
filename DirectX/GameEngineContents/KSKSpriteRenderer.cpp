@@ -1,15 +1,15 @@
 #include "PrecompileHeader.h"
-#include "MyContentSpriteRenderer.h"
+#include "KSKSpriteRenderer.h"
 
-MyContentSpriteRenderer::MyContentSpriteRenderer() 
+KSKSpriteRenderer::KSKSpriteRenderer()
 {
 }
 
-MyContentSpriteRenderer::~MyContentSpriteRenderer() 
+KSKSpriteRenderer::~KSKSpriteRenderer()
 {
 }
 
-void MyContentSpriteRenderer::Start() 
+void KSKSpriteRenderer::Start()
 {
 	GameEngineRenderer::Start();
 

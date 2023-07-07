@@ -179,7 +179,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MyContentSpriteRenderer.h">
+    <ClInclude Include="KSKSpriteRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -220,7 +220,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="MyContentSpriteRenderer.cpp">
+    <ClCompile Include="KSKSpriteRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
