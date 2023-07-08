@@ -13,6 +13,7 @@
 #include "FadeEffect.h"
 #include "Map.h"
 #include "Monster.h"
+#include "Portal.h"
 
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineSprite.h>
@@ -77,6 +78,10 @@ void PlayLevel::Start()
 
 	MonsterObject = CreateActor<Monster>();
 	MonsterObject->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
+
+	Portal0 = CreateActor<Portal>();
+	Portal0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
+	Portal0->SetLevelName("TitleLevel");
 	
 	
 }

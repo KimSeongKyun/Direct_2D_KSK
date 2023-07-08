@@ -34,6 +34,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> RenderTest = nullptr;
 	std::shared_ptr<class Map> Map0 = nullptr;
 	std::shared_ptr<class Monster> MonsterObject = nullptr;
+	std::shared_ptr<class Portal> Portal0 = nullptr;
 
 
 };

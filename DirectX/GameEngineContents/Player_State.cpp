@@ -313,9 +313,9 @@ void Player::StateInit()
 						NextPosition += float4::Right * Speed * _DeltaTime;
 					}
 
-					if (PlayerGravityValue.x <= 0)
+					if (PlayerGravityValue.y <= 0)
 					{
-
+						int a = 0;
 						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
 						{
 							if(ColMap->GetPixel(ColMapDif.ix() + CurPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - CurPosition.iy()) != ColColor)
@@ -323,6 +323,7 @@ void Player::StateInit()
 								GetTransform()->SetWorldPosition(CurPosition);
 								PlayerGravity = false;
 								Gravity = 0.0f;
+								JumpPower = { 0,4,0 };
 								FSM.ChangeState("Move");
 							}
 						}
@@ -365,17 +366,18 @@ void Player::StateInit()
 		{
 			PlayerGravity = false;
 
-			if (true == GameEngineInput::IsDown("Up"))
+			if (true == GameEngineInput::IsPress("Up"))
 			{
 				GetTransform()->AddWorldPosition(float4::Up* Speed* _DeltaTime);
 			}
-			if (true == GameEngineInput::IsDown("Down"))
+			if (true == GameEngineInput::IsPress("Down"))
 			{
 				GetTransform()->AddWorldPosition(float4::Down* Speed * _DeltaTime);
 			}
 
 			if (true == GameEngineInput::IsDown("Jump"))
 			{
+				JumpPower = { 0,2,0 };
 				FSM.ChangeState("Jump");
 			}
 
