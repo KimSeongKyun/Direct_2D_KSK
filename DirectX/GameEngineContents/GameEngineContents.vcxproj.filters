@@ -31,6 +31,9 @@
     <ClInclude Include="Portal.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Ellinia_Level.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -63,6 +66,9 @@
     <ClCompile Include="Contents_Resources.cpp" />
     <ClCompile Include="Portal.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Ellinia_Level.cpp">
+      <Filter>Levels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

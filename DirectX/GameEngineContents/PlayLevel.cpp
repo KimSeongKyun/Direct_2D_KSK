@@ -35,7 +35,6 @@ void PlayLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown("LevelChangeKey"))
 	{
 		IsDebugSwitch();
-		// GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
 
@@ -43,32 +42,11 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Start()
 {
-	//float4 screensize = { GameEngineWindow::GetScreenSize().half().x, GameEngineWindow::GetScreenSize().half().y, -1000.0f };
 	
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	//GetMainCamera()->GetTransform()->SetLocalPosition({ 0.0f, 0.0f ,-1000.0f });
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 900,-1000.0f});
 	
-
-	//{
-	//	GameEngineDirectory NewDir;
-	//	NewDir.MoveParentToDirectory("ContentResources");
-	//	NewDir.Move("ContentResources");
-	//	NewDir.Move("Texture");
-	//
-
-	//	std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png", });
-
-	//	
-
-
-	//	for (size_t i = 0; i < File.size(); i++)
-	//	{
-	//		GameEngineTexture::Load(File[i].GetFullPath());
-	//	}
-
-	//}
 	Map0 = CreateActor<Map>();
 	Map0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
 	Player0 = CreateActor<Player>();

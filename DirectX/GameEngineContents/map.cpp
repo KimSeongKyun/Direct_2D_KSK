@@ -31,8 +31,8 @@ void Map::Start()
 	BackGround->SetScaleToTexture("ElliniaBackGround1.png");
 	BackGround->GetTransform()->SetWorldPosition({ 0, 0, -1000.0f });
 	Ground = CreateComponent<GameEngineSpriteRenderer>();
-	Ground->SetTexture("Ellinia1.png");
-	Ground->SetScaleToTexture("Ellinia1.png");
+	Ground->SetTexture("Ellinia0.png");
+	Ground->SetScaleToTexture("Ellinia0.png");
 	Ground->GetTransform()->SetWorldPosition({ 0, 0, -100.0f });
 	
 	
