@@ -58,6 +58,7 @@ private:
 
 	std::string CurPlayerState = "Idle";
 	
+	
 	GameEnginePixelColor ColColor = { (char)255, (char)0, (char)255,(char)255 };
 	
 	std::shared_ptr<class GameEngineTexture> ColMap;
@@ -79,5 +80,6 @@ public:
 
 	void GravityCheck(float _DeltaTime);
 	void LRColCheck(float _DeltaTime, float4 _LeftOrRight);
+	void RopeCheck();
 };
 

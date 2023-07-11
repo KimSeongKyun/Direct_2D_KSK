@@ -54,7 +54,7 @@ void Player::Update(float _DeltaTime)
 		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(NextCameraPos);
 	}
 
-	int b = 0;
+	
 	
 		
 }
@@ -146,35 +146,7 @@ void Player::RendererStateChange(const std::string _State)
 	}
 	CurPlayerState = _State;
 	
-	//if (_State == "Idle")
-	//{
-	//	CurPlayerState = _State;
-	//	
-	//	Body->ChangeAnimation(_State);
-	//	
-	//}
-	//if (_State == "Move")
-	//{
-	//	CurPlayerState = _State;
-	//	
-	//	Body->ChangeAnimation( _State);
-	//	
-	//}
-	//if (_State == "Jump")
-	//{
-	//	CurPlayerState = _State;
-
-	//	Body->ChangeAnimation(_State);
-
-	//}
-	//if (_State == "Climb")
-	//{
-	//	Body->ChangeAnimation(_State);
-	//}
-	//if (_State == "Rope")
-	//{
-	//	Body->ChangeAnimation(_State);
-	//}
+	
 
 	if (_State == "Swing")
 	{	
@@ -213,24 +185,27 @@ void Player::SetCurMapScale(float4 _MapScale)
 
 void Player::GravityCheck(float _DeltaTime)
 {
-	Gravity += 10 * _DeltaTime;
-
-	if (Gravity > 5.0f)
+	if(PlayerGravity == true)
 	{
-		Gravity = 5.0f;
-	}
+		Gravity += 10 * _DeltaTime;
 
-	float4 CurPosition = GetTransform()->GetWorldPosition();
-	GetTransform()->AddWorldPosition(float4::Down * Gravity);
+		if (Gravity > 5.0f)
+		{
+			Gravity = 5.0f;
+		}
 
-	float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
-	float4 NextPosition = CurPosition + (float4::Down * Gravity);
+		float4 CurPosition = GetTransform()->GetWorldPosition();
+		GetTransform()->AddWorldPosition(float4::Down * Gravity);
 
-	if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
-	{
-		GetTransform()->SetWorldPosition(CurPosition);
-		PlayerGravity = false;
-		Gravity = 0.0f;
+		float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+		float4 NextPosition = CurPosition + (float4::Down * Gravity);
+
+		if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+		{
+			GetTransform()->SetWorldPosition(CurPosition);
+			PlayerGravity = false;
+			Gravity = 0.0f;
+		}
 	}
 }
 
@@ -239,7 +214,6 @@ void  Player::LRColCheck(float _DeltaTime, float4 _LeftOrRight)
 	float4 CurPosition = GetTransform()->GetWorldPosition();
 	float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
 
-	GetTransform()->SetLocalNegativeScaleX();
 	GetTransform()->AddWorldPosition(_LeftOrRight * Speed * _DeltaTime);
 
 	float4 NextPosition = CurPosition + _LeftOrRight * Speed * _DeltaTime;
@@ -263,6 +237,20 @@ void  Player::LRColCheck(float _DeltaTime, float4 _LeftOrRight)
 				continue;
 			}
 		}
+	}
+}
+
+void Player::RopeCheck()
+{
+	std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
+
+	if (isColRope != nullptr)
+	{
+		float4 PlayerPos = GetTransform()->GetWorldPosition();
+		float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
+		GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
+
+		FSM.ChangeState("Rope");
 	}
 }
 //void Player::CameraUpdate(float _DeltaTime)

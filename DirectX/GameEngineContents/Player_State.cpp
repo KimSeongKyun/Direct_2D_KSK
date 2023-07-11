@@ -26,121 +26,73 @@ void Player::StateInit()
 		},
 			.Update = [this](float _DeltaTime)
 		{
+
 			PlayerGravity = true;
 	
 			GravityCheck(_DeltaTime);
 
-			if (true == GameEngineInput::IsPress("MoveLeft"))
+
+			if (CurPlayerState != "Swing")
 			{
-
-				float4 CurPosition = GetTransform()->GetWorldPosition();
-				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
-				
-				GetTransform()->SetLocalPositiveScaleX();
-				GetTransform()->AddWorldPosition(float4::Left * Speed * _DeltaTime);
-				float4 NextPosition = CurPosition + float4::Left * Speed * _DeltaTime;
-
-				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+				if (true == GameEngineInput::IsPress("MoveLeft"))
 				{
-					for (float i = 1.0f; i <= 5.0f; i += _DeltaTime)
-					{
-						NextPosition += float4::Up * i;
-						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) != ColColor)
-						{
-							GetTransform()->SetWorldPosition(NextPosition);
-							break;
-						}
 
-						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
-						{
-							if (i == 5.0f)
-							{
-								GetTransform()->SetWorldPosition(CurPosition);
-							}
-							continue;
-						}
-					}
+					LRColCheck(_DeltaTime, float4::Left);
+					GetTransform()->SetLocalPositiveScaleX();
+				}
+
+				if (true == GameEngineInput::IsPress("MoveRight"))
+				{
+
+					LRColCheck(_DeltaTime, float4::Right);
+					GetTransform()->SetLocalNegativeScaleX();
+				}
+
+				if (true == GameEngineInput::IsPress("Jump"))
+				{
+					PlayerGravity = true;
+					FSM.ChangeState("Jump");
+				}
+
+				if (true == GameEngineInput::IsDown("Up"))
+				{
+					RopeCheck();
+				}
+
+
+				if (false == GameEngineInput::IsPress("MoveLeft") &&
+					false == GameEngineInput::IsPress("MoveRight") &&
+					false == GameEngineInput::IsPress("Up") &&
+					false == GameEngineInput::IsPress("Down") &&
+					false == GameEngineInput::IsPress("Swing") &&
+					false == GameEngineInput::IsPress("Jump"))
+				{
+					FSM.ChangeState("Idle");
 				}
 			}
 
-			if (true == GameEngineInput::IsPress("MoveRight"))
+
+			if (true == GameEngineInput::IsDown("Swing"))
 			{
-				float4 CurPosition = GetTransform()->GetWorldPosition();
-				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
-			
-				GetTransform()->SetLocalNegativeScaleX();
-				GetTransform()->AddWorldPosition(float4::Right * Speed * _DeltaTime);
+				RendererStateChange("Swing");
+			}
 
-				float4 NextPosition = CurPosition + float4::Right * Speed * _DeltaTime;
-				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+			if (CurPlayerState == "Swing")
+			{
+				if (Body->IsAnimationEnd())
 				{
-					for (float i = 1.0f; i <= 5.0f; i +=  _DeltaTime)
-					{
-						NextPosition += float4::Up * i;
-						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) != ColColor)
-						{
-							GetTransform()->SetWorldPosition(NextPosition);
-							break;
-						}
-
-						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
-						{
-							if (i == 5.0f)
-							{
-								GetTransform()->SetWorldPosition(CurPosition);
-							}
-							continue;
-						}
-					}
+					RendererStateChange("Idle");
 				}
 			}
 
-			if (true == GameEngineInput::IsPress("Jump"))
-			{
-				PlayerGravity = true;
-				FSM.ChangeState("Jump");
-			}
-
-			if (true == GameEngineInput::IsDown("Up"))
-			{
-				std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
-
-				if (isColRope != nullptr)
-				{
-					float4 PlayerPos = GetTransform()->GetWorldPosition();
-					float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
-					GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
-
-					FSM.ChangeState("Rope");
-				}
-			}
-			
 			float4 Pos = GetTransform()->GetLocalPosition();
 
 			Pos.z -= 100;
 
-			if (false == GameEngineInput::IsPress("MoveLeft") &&
-				false == GameEngineInput::IsPress("MoveRight") &&
-				false == GameEngineInput::IsPress("Up") &&
-				false == GameEngineInput::IsPress("Down") &&
-				false == GameEngineInput::IsPress("Swing") &&
-				false == GameEngineInput::IsPress("Jump"))
-			{
-				FSM.ChangeState("Idle");
-			}
 
 			GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
-			if (true == GameEngineInput::IsPress("Swing"))
-			{
-				RendererStateChange("Swing");
-
-				if (Body->IsAnimationEnd())
-				{
-					RendererStateChange("Idle");
-					FSM.ChangeState("Idle");
-				}
-			}
+		
 
 		},
 			.End = [this]()
@@ -156,57 +108,55 @@ void Player::StateInit()
 			.Name = "Idle",
 			.Start = [this]()
 			{
-					RendererStateChange("Idle");
+				RendererStateChange("Idle");
 			},
 			.Update = [this](float _DeltaTime)
 			{				
 				
-				RendererStateChange("Idle");
+				PlayerGravity = true;
 				GravityCheck(_DeltaTime);
-				if (true == GameEngineInput::IsDown("MoveLeft"))
+
+				if (true == GameEngineInput::IsPress("MoveLeft"))
 				{
-					FSM.ChangeState("Move");
 					GetTransform()->SetLocalPositiveScaleX();
-				}
-				if (true == GameEngineInput::IsDown("MoveRight"))
-				{
 					FSM.ChangeState("Move");
-					GetTransform()->SetLocalNegativeScaleX();
+					
 				}
-				if (true == GameEngineInput::IsDown("Up"))
+				if (true == GameEngineInput::IsPress("MoveRight"))
 				{
-					
-					std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
-
-					if (isColRope != nullptr)
-					{
-						float4 PlayerPos = GetTransform()->GetWorldPosition();
-						float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
-						GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
-						FSM.ChangeState("Rope");
-					}
-
+					GetTransform()->SetLocalNegativeScaleX();
+					FSM.ChangeState("Move");
 					
 				}
-				if (true == GameEngineInput::IsDown("Down"))
+				if (true == GameEngineInput::IsPress("Up"))
+				{					
+					RopeCheck();
+				}
+
+				if (true == GameEngineInput::IsPress("Down"))
 				{
 					return;
 				}
+
 				if (true == GameEngineInput::IsPress("Swing"))
 				{
 					RendererStateChange("Swing");
+				}
+				if (true == GameEngineInput::IsPress("Jump"))
+				{
+					PlayerGravity = true;
+					FSM.ChangeState("Jump");
+				}
 
+				if (CurPlayerState == "Swing")
+				{
 					if (Body->IsAnimationEnd())
 					{
 						RendererStateChange("Idle");
 						FSM.ChangeState("Idle");
 					}
 				}
-				if (true == GameEngineInput::IsDown("Jump"))
-				{
-					PlayerGravity = true;
-					FSM.ChangeState("Jump");
-				}
+
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
@@ -234,6 +184,7 @@ void Player::StateInit()
 					RendererStateChange("Idle");
 					FSM.ChangeState("Idle");
 				}
+
 				float4 Pos = GetTransform()->GetLocalPosition();
 
 				Pos.z -= 100;
@@ -283,6 +234,10 @@ void Player::StateInit()
 						
 						NextPosition += float4::Right * Speed * _DeltaTime;
 					}
+					if (true == GameEngineInput::IsPress("Swing"))
+					{
+						RendererStateChange("Swing");
+					}
 
 					if (PlayerGravityValue.y <= 0)
 					{
@@ -295,7 +250,11 @@ void Player::StateInit()
 								PlayerGravity = false;
 								Gravity = 0.0f;
 								JumpPower = { 0,4,0 };
-								//FSM.ChangeState("Move");
+								if (CurPlayerState != "Swing")
+								{
+									FSM.ChangeState("Move");
+								}
+								
 							}
 						}
 
@@ -303,17 +262,7 @@ void Player::StateInit()
 
 					if (true == GameEngineInput::IsDown("Up"))
 					{
-						std::shared_ptr<GameEngineCollision> isColRope = ColRope->Collision(static_cast<int>(ObjectEnum::Rope), ColType::AABBBOX2D, ColType::AABBBOX2D);
-
-						if (isColRope != nullptr)
-						{
-							float4 PlayerPos = GetTransform()->GetWorldPosition();
-							float4 RopePos = ColRope->GetTransform()->GetWorldPosition();
-							GetTransform()->SetWorldPosition({ RopePos.x, PlayerPos.y,PlayerPos.z });
-
-							FSM.ChangeState("Rope");
-						}
-
+						RopeCheck();
 					}
 				}
 
@@ -322,13 +271,12 @@ void Player::StateInit()
 				Pos.z -= 100;
 				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
-				if (true == GameEngineInput::IsPress("Swing"))
-				{
-					RendererStateChange("Swing");
+				
 
-					if (Body->IsAnimationEnd())
+				if (CurPlayerState == "Swing")
+				{
+					if (true == Body->IsAnimationEnd())
 					{
-						RendererStateChange("Idle");
 						FSM.ChangeState("Idle");
 					}
 				}
