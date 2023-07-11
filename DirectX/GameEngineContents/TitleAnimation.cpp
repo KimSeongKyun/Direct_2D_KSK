@@ -38,6 +38,7 @@ void TitleAnimation::Start()
 	TitleAniRender = CreateComponent<GameEngineSpriteRenderer>();
 	TitleAniRender->CreateAnimation({ .AnimationName = "Wizet", .SpriteName = "Wizet",.Loop = false ,.ScaleToTexture = true });
 	TitleAniRender->ChangeAnimation("Wizet");
+	TitleAniRender->GetTransform()->AddLocalPosition(float4::Up * 60.0f);
 	//.FrameInter = 0.2f,
 }
 void TitleAnimation::Update(float _Delta)

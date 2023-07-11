@@ -33,14 +33,6 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
-	std::shared_ptr<class GameEngineSpriteRenderer> MainRenderer;
-	std::shared_ptr<class GameEngineSpriteRenderer> Body;
-
-	void RendererStateChange(const std::string _State);
-	void TestCallBack();
-	void SetColMap(const std::string_view& _ColMap) { ColMap = GameEngineTexture::Find(_ColMap);};
-	std::shared_ptr<class GameEngineTexture> GetColMap() { return ColMap; };
-
 
 protected:
 	void Start();
@@ -51,34 +43,41 @@ protected:
 
 
 private:
-	float Angle = 0.0f;
-
-	std::shared_ptr<class GameEngineCollision> ColRope;
-	
-	
 	GameEngineFSM FSM;
 
+	float Angle = 0.0f;
 	float Speed = 100.0f; 
+	float Gravity = 0.0f;
+	
+	bool PlayerGravity = false;
 	
 	float4 PlayerSize = { 39.0f, 82.0f };
-
-	float4 IdleBody0 = { -4.0f, -17.0f };
-	float4 IdleBody1 = { -4.0f, -17.0f };
-	float4 IdleBody2 = { -5.0f, -17.0f };
-	float4 IdleBody3 = { -4.0f, -17.0f };
-
-	float4 IdleArm0 = { 7.0f, -12.0f };
-	
-
-	float4 IdleHead = { 0.0f, 14.0f };
+	float4 PlayerHalfValue;
+	float4 JumpPower = { 0, 4, 0 };
+	float4 CurMapScale;
 
 	std::string CurPlayerState = "Idle";
-	float Gravity = 0.0f;
-	float4 JumpPower = { 0, 4, 0 };
-	bool PlayerGravity = false;
-	std::shared_ptr<class GameEngineTexture> ColMap;
-	GameEnginePixelColor ColColor = { (char)255, (char)0, (char)255,(char)255 };
-	float4 PlayerHalfValue;
 	
+	GameEnginePixelColor ColColor = { (char)255, (char)0, (char)255,(char)255 };
+	
+	std::shared_ptr<class GameEngineTexture> ColMap;
+	std::shared_ptr<class GameEngineTexture> CurMap;
+	std::shared_ptr<class GameEngineSpriteRenderer> MainRenderer;
+	std::shared_ptr<class GameEngineSpriteRenderer> Body;
+	std::shared_ptr<class GameEngineCollision> ColRope;
+	
+
+public:
+	void RendererStateChange(const std::string _State);
+	void TestCallBack();
+	void SetColMap(const std::string_view& _ColMap) { ColMap = GameEngineTexture::Find(_ColMap); };
+	void SetCurMap(const std::string_view& _ColMap) { CurMap = GameEngineTexture::Find(_ColMap); };
+	void SetCurMapScale(float4 _MapScale);
+	//void CameraUpdate(float _DeltaTime);
+	std::shared_ptr<class GameEngineTexture> GetColMap() { return ColMap; };
+	
+
+	void GravityCheck(float _DeltaTime);
+	void LRColCheck(float _DeltaTime, float4 _LeftOrRight);
 };
 

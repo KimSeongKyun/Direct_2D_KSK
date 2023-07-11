@@ -183,7 +183,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Monster.h">
+    <ClInclude Include="Snale.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -240,7 +240,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
+    <ClCompile Include="Snale.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -1,18 +1,18 @@
 #include "PrecompileHeader.h"
-#include "Monster.h"
+#include "Snale.h"
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineSprite.h>
 #include <GameEngineBase/GameEngineRandom.h>
 
-Monster::Monster() 
+Snale::Snale()
 {
 }
 
-Monster::~Monster()
+Snale::~Snale()
 {
 }
 
-void Monster::Start()
+void Snale::Start()
 {
 	if (nullptr == GameEngineSprite::Find("SnaleDIe"))
 	{
@@ -38,7 +38,7 @@ void Monster::Start()
 	Render0->ChangeAnimation("SnaleIdle");
 }
 
-void Monster::Update(float _Delta)
+void Snale::Update(float _Delta)
 {
 	StackTime += _Delta;
 	if (StackTime < 1.5f)
@@ -82,12 +82,12 @@ void Monster::Update(float _Delta)
 
 }
 
-void Monster::Render(float _Delta)
+void Snale::Render(float _Delta)
 {
 
 }
 
-void Monster::ChangeState(const std::string& _State)
+void Snale::ChangeState(const std::string& _State)
 {
 	if (_State == "SnaleLeftMove" || _State == "SnaleRightMove")
 	{

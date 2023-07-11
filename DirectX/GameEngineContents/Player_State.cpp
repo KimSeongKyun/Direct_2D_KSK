@@ -27,33 +27,8 @@ void Player::StateInit()
 			.Update = [this](float _DeltaTime)
 		{
 			PlayerGravity = true;
-
-			
-
-			if (PlayerGravity == true)
-			{
-				Gravity += 10 * _DeltaTime;
-
-				if (Gravity > 5.0f)
-				{
-					Gravity = 5.0f;
-				}
-				float4 CurPosition = GetTransform()->GetWorldPosition();
-				float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
-				
-				
-				GetTransform()->AddWorldPosition(float4::Down * Gravity);
-				float4 NextPosition = CurPosition + (float4::Down * Gravity);
-
-				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
-				{
-					GetTransform()->SetWorldPosition(CurPosition);
-					PlayerGravity = false;
-					Gravity = 0.0f;
-				}
-			}
-
-			
+	
+			GravityCheck(_DeltaTime);
 
 			if (true == GameEngineInput::IsPress("MoveLeft"))
 			{
@@ -156,6 +131,17 @@ void Player::StateInit()
 
 			GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
 
+			if (true == GameEngineInput::IsPress("Swing"))
+			{
+				RendererStateChange("Swing");
+
+				if (Body->IsAnimationEnd())
+				{
+					RendererStateChange("Idle");
+					FSM.ChangeState("Idle");
+				}
+			}
+
 		},
 			.End = [this]()
 		{
@@ -174,31 +160,9 @@ void Player::StateInit()
 			},
 			.Update = [this](float _DeltaTime)
 			{				
-				PlayerGravity = true;
-
-				if (PlayerGravity == true)
-				{
-					Gravity += 10 * _DeltaTime;
-
-					if (Gravity > 5.0f)
-					{
-						Gravity = 5.0f;
-					}
-
-					float4 CurPosition = GetTransform()->GetWorldPosition();
-					GetTransform()->AddWorldPosition(float4::Down * Gravity);
-
-					float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
-					float4 NextPosition = CurPosition + (float4::Down * Gravity);
-
-					if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
-					{
-						GetTransform()->SetWorldPosition(CurPosition);
-						PlayerGravity = false;
-						Gravity = 0.0f;
-					}
-				}
+				
 				RendererStateChange("Idle");
+				GravityCheck(_DeltaTime);
 				if (true == GameEngineInput::IsDown("MoveLeft"))
 				{
 					FSM.ChangeState("Move");
@@ -230,7 +194,13 @@ void Player::StateInit()
 				}
 				if (true == GameEngineInput::IsPress("Swing"))
 				{
-					FSM.ChangeState("Swing");
+					RendererStateChange("Swing");
+
+					if (Body->IsAnimationEnd())
+					{
+						RendererStateChange("Idle");
+						FSM.ChangeState("Idle");
+					}
 				}
 				if (true == GameEngineInput::IsDown("Jump"))
 				{
@@ -255,6 +225,10 @@ void Player::StateInit()
 			},
 			.Update = [this](float _DeltaTime)
 			{
+				PlayerGravity = true;
+
+				GravityCheck(_DeltaTime);
+
 				if (Body->IsAnimationEnd())
 				{
 					RendererStateChange("Idle");
@@ -274,14 +248,12 @@ void Player::StateInit()
 			.Name = "Jump",
 			.Start = [this]()
 			{
-				int a = 0;
+				RendererStateChange("Jump");
 			},
 			.Update = [this](float _DeltaTime)
 			{
 				if (PlayerGravity == true)
 				{
-					RendererStateChange("Jump");
-
 					Gravity += 10 * _DeltaTime;
 					if (Gravity > 9.0f)
 					{
@@ -314,7 +286,7 @@ void Player::StateInit()
 
 					if (PlayerGravityValue.y <= 0)
 					{
-						int a = 0;
+						
 						if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
 						{
 							if(ColMap->GetPixel(ColMapDif.ix() + CurPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - CurPosition.iy()) != ColColor)
@@ -323,7 +295,7 @@ void Player::StateInit()
 								PlayerGravity = false;
 								Gravity = 0.0f;
 								JumpPower = { 0,4,0 };
-								FSM.ChangeState("Move");
+								//FSM.ChangeState("Move");
 							}
 						}
 
@@ -349,6 +321,17 @@ void Player::StateInit()
 
 				Pos.z -= 100;
 				GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(Pos);
+
+				if (true == GameEngineInput::IsPress("Swing"))
+				{
+					RendererStateChange("Swing");
+
+					if (Body->IsAnimationEnd())
+					{
+						RendererStateChange("Idle");
+						FSM.ChangeState("Idle");
+					}
+				}
 			}
 		}
 

@@ -32,7 +32,7 @@ protected:
 private:
 	std::shared_ptr<class Player> Player0 = nullptr;
 	std::shared_ptr<class Ellinia1_map> Map0 = nullptr;
-	std::shared_ptr<class Monster> MonsterObject = nullptr;
+	std::shared_ptr<class Snale> MonsterObject = nullptr;
 	std::shared_ptr<class Portal> Portal0 = nullptr;
 };
 

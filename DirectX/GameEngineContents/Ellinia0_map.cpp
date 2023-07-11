@@ -36,6 +36,7 @@ void Ellinia0_map::Start()
 	Ground->SetScaleToTexture("Ellinia0.png");
 	Ground->GetTransform()->SetWorldPosition({ 0, 0, -100.0f });
 	
+	//GameEngineCore::
 	
 }
 

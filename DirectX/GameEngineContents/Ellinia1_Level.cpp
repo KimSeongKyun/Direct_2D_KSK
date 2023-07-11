@@ -12,7 +12,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "FadeEffect.h"
 #include "Ellinia1_map.h"
-#include "Monster.h"
+#include "Snale.h"
 #include "Portal.h"
 
 #include <GameEngineCore/GameEngineTexture.h>
@@ -37,24 +37,31 @@ void Ellinia1_Level::Update(float _DeltaTime)
 		IsDebugSwitch();
 	}*/
 
+	if (GameEngineInput::IsDown("LevelChangeKey"))
+	{
+		GameEngineCore::ChangeLevel("Ellinia0_Level");
+	}
 
 }
 
 void Ellinia1_Level::Start()
 {
-	
+
+
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 900,-1000.0f});
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f});
 	
 	Map0 = CreateActor<Ellinia1_map>();
 	Map0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
+
+
 	Player0 = CreateActor<Player>();
 	Player0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
 	Player0->SetColMap("ColEllinia1.png");
+	Player0->SetCurMap("Ellinia1.png");
 	
-
-	MonsterObject = CreateActor<Monster>();
+	MonsterObject = CreateActor<Snale>();
 	MonsterObject->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
 
 	Portal0 = CreateActor<Portal>();
@@ -70,6 +77,9 @@ void Ellinia1_Level::LevelChangeStart()
 
 void Ellinia1_Level::LevelChangeEnd()
 {
+
 	GameEngineLevel::LevelChangeEnd();
+
+
 }
 

@@ -29,15 +29,52 @@ Player::~Player()
 
 void Player::Update(float _DeltaTime)
 {
-
 	
-
+	float4 CurCameraPos = GetLevel()->GetMainCamera()->GetTransform()->GetWorldPosition();
+	float4 CameraScale = GameEngineWindow::GetScreenSize();
+	float4 MapScale = CurMap->GetScale();
+	float LeftEnd = -MapScale.hx() + CameraScale.hx();
+	float RightEnd = MapScale.hx() - CameraScale.hx();
+	float UpEnd = MapScale.hy() - CameraScale.hy();
+	float DownEnd = -MapScale.hy() + CameraScale.hy();
+	int a = 0;
 	FSM.Update(_DeltaTime);
-	// Pivot2->GetTransform()->AddLocalRotation({0.0f, 90.0f * _DeltaTime, 0.0f});
-	//	SubRender->GetTransform()->SetWorldRotation(float4::Zero);
+
+	float4 NextCameraPos = GetLevel()->GetMainCamera()->GetTransform()->GetWorldPosition();
+
+	if (RightEnd < NextCameraPos.x || NextCameraPos.x < LeftEnd )
+	{
+		NextCameraPos = { CurCameraPos.x, NextCameraPos.y, NextCameraPos.z };
+		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(NextCameraPos);
+	}
+
+	if (UpEnd < NextCameraPos.y || NextCameraPos.y < DownEnd)
+	{
+		NextCameraPos = { NextCameraPos.x,  CurCameraPos.y, NextCameraPos.z };
+		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(NextCameraPos);
+	}
+
+	int b = 0;
+	
+		
 }
 
 void Player::Start()
+{
+	
+
+	StateInit();
+
+
+}
+
+// 이건 디버깅용도나 
+void Player::Render(float _Delta)
+{
+	// GetTransform()->AddLocalRotation({0.0f, 0.0f, 360.0f * _Delta});
+};
+
+void Player::LevelChangeStart()
 {
 	if (false == GameEngineInput::IsKey("MoveLeft"))
 	{
@@ -52,19 +89,7 @@ void Player::Start()
 	}
 
 	PlayerHalfValue = { GetTransform()->GetWorldScale().hx(), GetTransform()->GetWorldScale().hy() };
-	
 
-	StateInit();
-}
-
-// 이건 디버깅용도나 
-void Player::Render(float _Delta)
-{
-	// GetTransform()->AddLocalRotation({0.0f, 0.0f, 360.0f * _Delta});
-};
-
-void Player::LevelChangeStart()
-{
 
 	if (nullptr == GameEngineSprite::Find("Idle"))
 	{
@@ -85,32 +110,33 @@ void Player::LevelChangeStart()
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Rope").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Ladder").GetFullPath());
 
+	}
 
-		if (nullptr == Body)
+	if (nullptr == Body)
+	{
+		Body = CreateComponent< GameEngineSpriteRenderer>();
+		Body->CreateAnimation({ .AnimationName = "Idle", .SpriteName = "Idle",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Move", .SpriteName = "Move",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Jump", .SpriteName = "Jump",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Swing0", .SpriteName = "Swing0",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Swing1", .SpriteName = "Swing1",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Swing2", .SpriteName = "Swing2",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Rope", .SpriteName = "Rope",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Ladder", .SpriteName = "Ladder",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->ChangeAnimation("Idle");
+
 		{
-			Body = CreateComponent< GameEngineSpriteRenderer>();
-			Body->CreateAnimation({ .AnimationName = "Idle", .SpriteName = "Idle",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Move", .SpriteName = "Move",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Jump", .SpriteName = "Jump",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Swing0", .SpriteName = "Swing0",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Swing1", .SpriteName = "Swing1",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Swing2", .SpriteName = "Swing2",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Rope", .SpriteName = "Rope",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->CreateAnimation({ .AnimationName = "Ladder", .SpriteName = "Ladder",.FrameInter = 0.2f, .ScaleToTexture = true });
-			Body->ChangeAnimation("Idle");
-
-			{
-				ColRope = CreateComponent<GameEngineCollision>();
-				ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
-				ColRope->SetOrder(static_cast<int>(ObjectEnum::Player));
-
-			}
+			ColRope = CreateComponent<GameEngineCollision>();
+			ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
+			ColRope->SetOrder(static_cast<int>(ObjectEnum::Player));
 
 		}
 
+	}
+
 	
 
-	}
+	
 }
 void Player::RendererStateChange(const std::string _State)
 {
@@ -180,5 +206,66 @@ void Player::TestCallBack()
 	MsgTextBox("됩니다");
 }
 
+void Player::SetCurMapScale(float4 _MapScale)
+{
+	CurMapScale = _MapScale;
+}
 
+void Player::GravityCheck(float _DeltaTime)
+{
+	Gravity += 10 * _DeltaTime;
 
+	if (Gravity > 5.0f)
+	{
+		Gravity = 5.0f;
+	}
+
+	float4 CurPosition = GetTransform()->GetWorldPosition();
+	GetTransform()->AddWorldPosition(float4::Down * Gravity);
+
+	float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+	float4 NextPosition = CurPosition + (float4::Down * Gravity);
+
+	if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+	{
+		GetTransform()->SetWorldPosition(CurPosition);
+		PlayerGravity = false;
+		Gravity = 0.0f;
+	}
+}
+
+void  Player::LRColCheck(float _DeltaTime, float4 _LeftOrRight)
+{
+	float4 CurPosition = GetTransform()->GetWorldPosition();
+	float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+
+	GetTransform()->SetLocalNegativeScaleX();
+	GetTransform()->AddWorldPosition(_LeftOrRight * Speed * _DeltaTime);
+
+	float4 NextPosition = CurPosition + _LeftOrRight * Speed * _DeltaTime;
+	if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+	{
+		for (float i = 1.0f; i <= 5.0f; i += _DeltaTime)
+		{
+			NextPosition += float4::Up * i;
+			if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) != ColColor)
+			{
+				GetTransform()->SetWorldPosition(NextPosition);
+				break;
+			}
+
+			if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() - i + (int)PlayerSize.hy() - NextPosition.iy()) == ColColor)
+			{
+				if (i == 5.0f)
+				{
+					GetTransform()->SetWorldPosition(CurPosition);
+				}
+				continue;
+			}
+		}
+	}
+}
+//void Player::CameraUpdate(float _DeltaTime)
+//{
+//
+//}

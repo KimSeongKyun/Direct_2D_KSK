@@ -4,10 +4,11 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 
+#include "ContentsCore.h"
 #include "Ellinia0_map.h"
 #include "Player.h"
 #include "Portal.h"
-#include "Monster.h"
+#include "Snale.h"
 
 
 Ellinia0_Level::Ellinia0_Level()
@@ -20,7 +21,7 @@ Ellinia0_Level::~Ellinia0_Level()
 
 void Ellinia0_Level::Start()
 {
-	if (nullptr == GameEngineSprite::Find("Ellinia1"))
+	if (nullptr == GameEngineSprite::Find("Ellinia0"))
 	{
 		GameEngineDirectory NewDir;
 
@@ -35,17 +36,22 @@ void Ellinia0_Level::Start()
 
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 900,-1000.0f });
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0,-1000.0f });
 
 
 	Map0 = CreateActor<Ellinia0_map>();
 	Map0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
+	
 	Player0 = CreateActor<Player>();
 	Player0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
 	Player0->SetColMap("ColEllinia0.png");
+	Player0->SetCurMap("ColEllinia0.png");
+	
+	
+	//ContentsCore::MapScale = 
 
 
-	MonsterObject = CreateActor<Monster>();
+	MonsterObject = CreateActor<Snale>();
 	MonsterObject->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
 
 	Portal0 = CreateActor<Portal>();
@@ -56,7 +62,10 @@ void Ellinia0_Level::Start()
 
 void Ellinia0_Level::Update(float _DeltaTime)
 {
-
+	if (GameEngineInput::IsDown("LevelChangeKey"))
+	{
+		GameEngineCore::ChangeLevel("Ellinia1_Level");
+	}
 }
 
 

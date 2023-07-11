@@ -17,13 +17,15 @@ public:
 	Ellinia0_map& operator=(const Ellinia0_map& _Other) = delete;
 	Ellinia0_map& operator=(Ellinia0_map&& _Other) noexcept = delete;
 
+	
+	
+
+protected:
 	void Start();
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
 
-	
-
-protected:
+	float4 GetMapScale();
 
 private:
 	std::shared_ptr<class GameEngineSpriteRenderer> BackGround;

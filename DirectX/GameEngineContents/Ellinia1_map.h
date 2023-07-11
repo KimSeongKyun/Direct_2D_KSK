@@ -18,6 +18,7 @@ public:
 	void Start();
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
+	
 
 protected:
 
@@ -25,5 +26,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> BackGround;
 	std::shared_ptr<class GameEngineSpriteRenderer> Ground;
 	
+
+
 
 };
