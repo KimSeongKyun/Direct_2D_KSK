@@ -5,7 +5,7 @@
     <ClInclude Include="TitleLevel.h">
       <Filter>Levels</Filter>
     </ClInclude>
-    <ClInclude Include="PlayLevel.h">
+    <ClInclude Include="Ellinia1_Level.h">
       <Filter>Levels</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -19,7 +19,7 @@
     <ClInclude Include="FadeEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
+    <ClInclude Include="Ellinia0_map.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
@@ -31,8 +31,14 @@
     <ClInclude Include="Portal.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Ellinia_Level.h">
+    <ClInclude Include="Ellinia0_Level.h">
       <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleAnimation.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Ellinia1_map.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +46,7 @@
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
+    <ClCompile Include="Ellinia1_Level.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -57,7 +63,7 @@
     <ClCompile Include="FadeEffect.cpp">
       <Filter>PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="map.cpp">
+    <ClCompile Include="Ellinia0_map.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
@@ -67,8 +73,14 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Ellinia_Level.cpp">
+    <ClCompile Include="Ellinia0_Level.cpp">
       <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleAnimation.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Ellinia1_map.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

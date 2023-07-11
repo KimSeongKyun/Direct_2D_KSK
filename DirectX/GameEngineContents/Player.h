@@ -49,7 +49,6 @@ protected:
 	void LevelChangeStart() override;
 	void StateInit();
 
-	float4 TestColor;
 
 private:
 	float Angle = 0.0f;

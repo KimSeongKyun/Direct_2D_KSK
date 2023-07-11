@@ -9,6 +9,8 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineActor.h>
 
+#include "TitleAnimation.h"
+
 
 TitleLevel::TitleLevel() 
 {
@@ -21,29 +23,20 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start() 
 {
-	if (nullptr == GameEngineSprite::Find("Wizet0.png"))
-	{
-		GameEngineDirectory NewDir;
-
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Texture");
-
-
-		// TestAnimation.png
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Title").GetFullPath());
-		
-	}
-
-
 	if (false == GameEngineInput::IsKey("LevelChangeKey"))
 	{
 		GameEngineInput::CreateKey("LevelChangeKey", 'A');
 	}
 
-	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	{
+		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
+		GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	}
 
+	{
+		Prev = CreateActor<TitleAnimation>();
+		Prev->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, -1.0f });
+	}
 
 	
 }

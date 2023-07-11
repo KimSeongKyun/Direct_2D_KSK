@@ -20,6 +20,8 @@ protected:
 	void Update(float _DeltaTime) override;
 
 private:
-	std::shared_ptr<class GameEngineSpriteRenderer> Prev;
+	std::shared_ptr<class TitleAnimation> Prev;
+	
+
 };
 

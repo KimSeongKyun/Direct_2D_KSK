@@ -1,7 +1,8 @@
 #include "PrecompileHeader.h"
 #include "ContentsCore.h"
 #include <GameEngineCore\GameEngineCore.h>
-#include "PlayLevel.h"
+#include "Ellinia0_Level.h"
+#include "Ellinia1_Level.h"
 #include "TitleLevel.h"
 
 #include <GameEngineCore/GameEngineCoreWindow.h>
@@ -21,13 +22,14 @@ void ContentsCore::GameStart()
 {
 
 
-	new int();
+	//new int();
 
 	GameEngineGUI::GUIWindowCreate<GameEngineCoreWindow>("CoreWindow");
 	ContentsResourcesCreate();
 	GameEngineCore::CreateLevel<TitleLevel>();
-	GameEngineCore::CreateLevel<PlayLevel>();
-	GameEngineCore::ChangeLevel("PlayLevel");
+	GameEngineCore::CreateLevel<Ellinia0_Level>();
+	GameEngineCore::CreateLevel< Ellinia1_Level>();
+	GameEngineCore::ChangeLevel("TitleLevel");
 }
 
 void ContentsCore::GameEnd() 

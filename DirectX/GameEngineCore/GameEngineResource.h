@@ -37,7 +37,7 @@ public:
 		Path = _Value;
 	}
 
-	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name) 
+	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name)
 	{
 		std::string UpperName = GameEngineString::ToUpper(_Name);
 

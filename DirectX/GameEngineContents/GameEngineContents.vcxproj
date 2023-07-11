@@ -167,7 +167,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Ellinia_Level.h">
+    <ClInclude Include="Ellinia0_Level.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Ellinia1_map.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -175,7 +179,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="map.h">
+    <ClInclude Include="Ellinia0_map.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -191,7 +195,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayLevel.h">
+    <ClInclude Include="Ellinia1_Level.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -204,6 +208,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
+    <ClInclude Include="TitleAnimation.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -216,7 +224,11 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Contents_Resources.cpp" />
-    <ClCompile Include="Ellinia_Level.cpp">
+    <ClCompile Include="Ellinia0_Level.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Ellinia1_map.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -224,7 +236,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="map.cpp">
+    <ClCompile Include="Ellinia0_map.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -241,7 +253,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
-    <ClCompile Include="PlayLevel.cpp">
+    <ClCompile Include="Ellinia1_Level.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -258,6 +270,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TitleAnimation.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <SubType>

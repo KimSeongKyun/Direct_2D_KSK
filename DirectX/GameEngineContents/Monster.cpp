@@ -14,7 +14,7 @@ Monster::~Monster()
 
 void Monster::Start()
 {
-	if (nullptr == GameEngineSprite::Find("Snale"))
+	if (nullptr == GameEngineSprite::Find("SnaleDIe"))
 	{
 		GameEngineDirectory NewDir;
 

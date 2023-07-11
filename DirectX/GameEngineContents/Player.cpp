@@ -39,7 +39,7 @@ void Player::Update(float _DeltaTime)
 
 void Player::Start()
 {
-	if (false == GameEngineInput::IsKey("PlayerMoveLeft"))
+	if (false == GameEngineInput::IsKey("MoveLeft"))
 	{
 		GameEngineInput::CreateKey("MoveLeft", VK_LEFT);
 		GameEngineInput::CreateKey("MoveRight", VK_RIGHT);
@@ -66,7 +66,7 @@ void Player::Render(float _Delta)
 void Player::LevelChangeStart()
 {
 
-	if (nullptr == GameEngineSprite::Find("Idle0.png"))
+	if (nullptr == GameEngineSprite::Find("Idle"))
 	{
 		GameEngineDirectory NewDir;
 
@@ -108,13 +108,7 @@ void Player::LevelChangeStart()
 
 		}
 
-		GameEnginePixelColor TestColor = ColMap->GetPixel(62, 424);
-
-		if (TestColor == ColColor)
-		{
-			int a = 0;
-		}
-		int a = 0;
+	
 
 	}
 }

@@ -9,8 +9,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineSprite.h>
-#include "Map.h"
-#include "PlayLevel.h"
+#include "Ellinia0_Level.h"
 #include "ObjectEnum.h"
 
 

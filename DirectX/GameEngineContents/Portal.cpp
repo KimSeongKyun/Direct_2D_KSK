@@ -17,7 +17,7 @@ Portal::~Portal()
 
 void Portal::Start()
 {
-	if (nullptr == GameEngineSprite::Find("Portal0.png"))
+	if (nullptr == GameEngineSprite::Find("Portal"))
 	{
 		GameEngineDirectory NewDir;
 
