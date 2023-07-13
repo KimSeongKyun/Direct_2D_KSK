@@ -24,9 +24,13 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> Render0;
 	std::shared_ptr<class GameEngineCollision> ColToPlayer;
 	std::string LevelName;
+
+	float4 Coordinate;
 	
 public:
 	void SetLevelName(const std::string_view& _LevelName);
+	void SetPlayerMovePos(float4 _Pos);
+	void SetCoordinate(float4 _Pos);
 
 };
 

@@ -41,45 +41,87 @@ void Snale::Start()
 void Snale::Update(float _Delta)
 {
 	StackTime += _Delta;
-	if (StackTime < 1.5f)
+	IsGravity == true;
+
+	if (IsGravity == true)
 	{
-		if (StateString == "SnaleLeftMove")
+		Gravity += 10 * _Delta;
+		if (Gravity > 9.0f)
 		{
-			GetTransform()->SetLocalPositiveScaleX();
-			GetTransform()->AddWorldPosition(float4::Left * Speed * _Delta);
+			Gravity = 9.0f;
 		}
 
-		if (StateString == "SnaleRightMove")
+		float4 PlayerGravityValue = float4::Down * Gravity;
+		float4 CurPosition = GetTransform()->GetWorldPosition();
+		GetTransform()->AddWorldPosition(float4::Down * Gravity);
+
+		float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+		float4 NextPosition = CurPosition + float4::Down * Gravity;
+		if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), ColGroundColor) == ColGroundColor)
 		{
-			GetTransform()->SetLocalNegativeScaleX();
-			GetTransform()->AddWorldPosition(float4::Right * Speed * _Delta);
+			GetTransform()->SetWorldPosition(CurPosition);
+			IsGravity = false;
 		}
 	}
-	if (StackTime >= 1.5f)
+	if (IsGravity == false)
 	{
-		int RandomNum = GameEngineRandom::MainRandom.RandomInt(0, 2);
-
-		if (RandomNum == 0)
+		if (StackTime < 1.5f)
 		{
-			ChangeState("SnaleIdle");
+			float4 CurPos = GetTransform()->GetWorldPosition();
+			float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+			
+			if (StateString == "SnaleLeftMove")
+			{
+				float4 NextPosition = CurPos + (float4::Left * Speed * _Delta);
+				GetTransform()->SetLocalPositiveScaleX();
+				GetTransform()->AddWorldPosition(float4::Left * Speed * _Delta);
+
+				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), ColWallColor) == ColWallColor)
+				{
+					GetTransform()->SetWorldPosition(CurPos);
+					
+				}
+
+			}
+
+			if (StateString == "SnaleRightMove")
+			{
+				float4 NextPosition = CurPos + (float4::Right * Speed * _Delta);
+				GetTransform()->SetLocalNegativeScaleX();
+				GetTransform()->AddWorldPosition(float4::Right * Speed * _Delta);
+
+				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), ColWallColor) == ColWallColor)
+				{
+					GetTransform()->SetWorldPosition(CurPos);
+					
+				}
+			}
+		}
+		if (IsGravity == false && StackTime >= 1.5f)
+		{
+			int RandomNum = GameEngineRandom::MainRandom.RandomInt(0, 2);
+
+			if (RandomNum == 0)
+			{
+				ChangeState("SnaleIdle");
+			}
+
+			if (RandomNum == 1)
+			{
+				ChangeState("SnaleLeftMove");
+			}
+
+
+			if (RandomNum == 2)
+			{
+				ChangeState("SnaleRightMove");
+			}
+
+			StackTime = 0.0f;
 		}
 
-		if (RandomNum == 1)
-		{
-			ChangeState("SnaleLeftMove");
-		}
-
-
-		if (RandomNum == 2)
-		{
-			ChangeState("SnaleRightMove");
-		}
-
-		StackTime = 0.0f;
 	}
-
-
-
+	
 }
 
 void Snale::Render(float _Delta)

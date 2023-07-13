@@ -26,6 +26,14 @@ Player::~Player()
 {
 }
 
+void Player::Start()
+{
+
+
+	StateInit();
+
+
+}
 
 void Player::Update(float _DeltaTime)
 {
@@ -59,14 +67,7 @@ void Player::Update(float _DeltaTime)
 		
 }
 
-void Player::Start()
-{
-	
 
-	StateInit();
-
-
-}
 
 // 이건 디버깅용도나 
 void Player::Render(float _Delta)
@@ -100,7 +101,7 @@ void Player::LevelChangeStart()
 		NewDir.Move("Texture");
 		NewDir.Move("Player");
 
-		// TestAnimation.png
+	
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Idle").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Move").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Jump").GetFullPath());
@@ -253,7 +254,4 @@ void Player::RopeCheck()
 		FSM.ChangeState("Rope");
 	}
 }
-//void Player::CameraUpdate(float _DeltaTime)
-//{
-//
-//}
+

@@ -7,7 +7,8 @@
 
 #include <GameEngineCore/GameEngineCoreWindow.h>
 
-
+//float4 ContentsCore::PlayerMovePos = { 743.0f, -785.0f , 1.0f };
+float4 ContentsCore::PlayerMovePos = { 0.0f, -0.0f , 0.0f };
 
 ContentsCore::ContentsCore() 
 {

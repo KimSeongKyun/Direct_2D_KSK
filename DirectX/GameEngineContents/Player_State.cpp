@@ -249,7 +249,7 @@ void Player::StateInit()
 								GetTransform()->SetWorldPosition(CurPosition);
 								PlayerGravity = false;
 								Gravity = 0.0f;
-								JumpPower = { 0,4,0 };
+								JumpPower = { 0,4.5f ,0 };
 								if (CurPlayerState != "Swing")
 								{
 									FSM.ChangeState("Move");

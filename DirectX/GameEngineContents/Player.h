@@ -49,11 +49,11 @@ private:
 	float Speed = 100.0f; 
 	float Gravity = 0.0f;
 	
-	bool PlayerGravity = false;
+	bool PlayerGravity = true;
 	
 	float4 PlayerSize = { 39.0f, 82.0f };
 	float4 PlayerHalfValue;
-	float4 JumpPower = { 0, 4, 0 };
+	float4 JumpPower = { 0, 4.5f, 0 };
 	float4 CurMapScale;
 
 	std::string CurPlayerState = "Idle";

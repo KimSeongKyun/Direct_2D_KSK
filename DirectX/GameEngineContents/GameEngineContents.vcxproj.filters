@@ -8,37 +8,40 @@
     <ClInclude Include="Ellinia1_Level.h">
       <Filter>Levels</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
-    <ClInclude Include="PlayLevelUIActor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="KSKSpriteRenderer.h" />
     <ClInclude Include="FadeEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Ellinia0_map.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Snale.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectEnum.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Ellinia0_Level.h">
       <Filter>Levels</Filter>
     </ClInclude>
-    <ClInclude Include="TitleAnimation.h">
-      <Filter>Object</Filter>
+    <ClInclude Include="Ellinia0_map.h">
+      <Filter>Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="Ellinia1_map.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Snale.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Object\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleAnimation.h">
+      <Filter>Object\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Status.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSlot.h">
+      <Filter>Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,38 +52,41 @@
     <ClCompile Include="Ellinia1_Level.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
-    <ClCompile Include="Player_State.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevelUIActor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="KSKSpriteRenderer.cpp" />
     <ClCompile Include="FadeEffect.cpp">
       <Filter>PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Ellinia0_map.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Snale.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Contents_Resources.cpp" />
-    <ClCompile Include="Portal.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Ellinia0_Level.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
-    <ClCompile Include="TitleAnimation.cpp">
-      <Filter>Object</Filter>
+    <ClCompile Include="Ellinia0_map.cpp">
+      <Filter>Object\Map</Filter>
     </ClCompile>
     <ClCompile Include="Ellinia1_map.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Snale.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Object\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleAnimation.cpp">
+      <Filter>Object\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Status.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickSlot.cpp">
+      <Filter>Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +98,21 @@
     </Filter>
     <Filter Include="PostEffect">
       <UniqueIdentifier>{8b278d14-8721-4921-8f5e-5601845f39f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Map">
+      <UniqueIdentifier>{65b9fd6d-9ba1-468e-93b9-a3e577fceb89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{25146907-9a37-4fd1-a585-77527c5d1e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Monster">
+      <UniqueIdentifier>{96b0c2a0-d17b-463c-99db-f1af397ae222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Object">
+      <UniqueIdentifier>{279c412c-4524-48e1-8fec-3a8ef873c38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{3e671d0d-a689-434a-93e8-4df40c4b4f38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

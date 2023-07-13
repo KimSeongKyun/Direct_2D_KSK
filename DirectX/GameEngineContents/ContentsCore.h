@@ -20,6 +20,8 @@ public:
 	static void GameStart();
 	static void GameEnd();
 
+	static float4 PlayerMovePos;
+
 protected:
 
 private:
