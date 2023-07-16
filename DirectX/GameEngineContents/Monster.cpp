@@ -27,7 +27,7 @@ void Monster::Render(float _Delta)
 
 void Monster::GravityCheck(float _Delta)
 {
-	GravityOn == true;
+	GravityOn = true;
 
 	if (GravityOn == true)
 	{
