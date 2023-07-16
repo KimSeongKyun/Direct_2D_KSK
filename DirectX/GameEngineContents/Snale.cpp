@@ -4,6 +4,8 @@
 #include <GameEngineCore/GameEngineSprite.h>
 #include <GameEngineBase/GameEngineRandom.h>
 
+#include "Monster.h"
+
 Snale::Snale()
 {
 }
@@ -36,39 +38,22 @@ void Snale::Start()
 	Render0->CreateAnimation({ .AnimationName = "SnaleIdle", .SpriteName = "SnaleIdle",.FrameInter = 0.2f, .ScaleToTexture = true });
 	Render0->CreateAnimation({ .AnimationName = "SnaleMove", .SpriteName = "SnaleMove",.FrameInter = 0.2f, .ScaleToTexture = true });
 	Render0->ChangeAnimation("SnaleIdle");
+
+	SetMonsterSize(SnaleSize);
+	SetHP(100);
 }
 
 void Snale::Update(float _Delta)
 {
 	StackTime += _Delta;
-	IsGravity == true;
+	GravityCheck(_Delta);
 
-	if (IsGravity == true)
-	{
-		Gravity += 10 * _Delta;
-		if (Gravity > 9.0f)
-		{
-			Gravity = 9.0f;
-		}
-
-		float4 PlayerGravityValue = float4::Down * Gravity;
-		float4 CurPosition = GetTransform()->GetWorldPosition();
-		GetTransform()->AddWorldPosition(float4::Down * Gravity);
-
-		float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
-		float4 NextPosition = CurPosition + float4::Down * Gravity;
-		if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), ColGroundColor) == ColGroundColor)
-		{
-			GetTransform()->SetWorldPosition(CurPosition);
-			IsGravity = false;
-		}
-	}
-	if (IsGravity == false)
+	if (IsGravity()	 == false)
 	{
 		if (StackTime < 1.5f)
 		{
 			float4 CurPos = GetTransform()->GetWorldPosition();
-			float4 ColMapDif = { ColMap->GetScale().hx(),ColMap->GetScale().hy() };
+			float4 ColMapDif = { GetColMap()->GetScale().hx(),GetColMap()->GetScale().hy() };
 			
 			if (StateString == "SnaleLeftMove")
 			{
@@ -76,7 +61,7 @@ void Snale::Update(float _Delta)
 				GetTransform()->SetLocalPositiveScaleX();
 				GetTransform()->AddWorldPosition(float4::Left * Speed * _Delta);
 
-				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), ColWallColor) == ColWallColor)
+				if (GetColMap()->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), GetWallColor()) == GetWallColor())
 				{
 					GetTransform()->SetWorldPosition(CurPos);
 					
@@ -90,14 +75,14 @@ void Snale::Update(float _Delta)
 				GetTransform()->SetLocalNegativeScaleX();
 				GetTransform()->AddWorldPosition(float4::Right * Speed * _Delta);
 
-				if (ColMap->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)SnaleSize.hy() - NextPosition.iy(), ColWallColor) == ColWallColor)
+				if (GetColMap()->GetPixel(ColMapDif.ix() + NextPosition.ix(), ColMapDif.iy() + (int)GetMonsterSize().hy() - NextPosition.iy(), GetWallColor()) == GetWallColor())
 				{
 					GetTransform()->SetWorldPosition(CurPos);
 					
 				}
 			}
 		}
-		if (IsGravity == false && StackTime >= 1.5f)
+		if (IsGravity() == false && StackTime >= 1.5f)
 		{
 			int RandomNum = GameEngineRandom::MainRandom.RandomInt(0, 2);
 

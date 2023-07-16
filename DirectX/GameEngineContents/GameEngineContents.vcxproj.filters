@@ -43,6 +43,9 @@
     <ClInclude Include="QuickSlot.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -87,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="QuickSlot.cpp">
       <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,7 @@
 #include "KSKSpriteRenderer.h"
 
 #include "ObjectEnum.h"
+#include "Monster.h"
 
 Player* Player::MainPlayer = nullptr;
 
@@ -130,9 +131,14 @@ void Player::LevelChangeStart()
 			ColRope = CreateComponent<GameEngineCollision>();
 			ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
 			ColRope->SetOrder(static_cast<int>(ObjectEnum::Player));
-
 		}
 
+		{
+			ColAttack = CreateComponent<GameEngineCollision>();
+			ColAttack->GetTransform()->SetLocalScale(PlayerSize);
+			ColAttack->GetTransform()->AddLocalPosition({ PlayerSize.x, 0.0f });
+			ColAttack->SetOrder(static_cast<int>(ObjectEnum::Player));
+		}
 	}
 
 	
@@ -255,3 +261,18 @@ void Player::RopeCheck()
 	}
 }
 
+void Player::Attack()
+{
+	std::shared_ptr<GameEngineCollision> Attack = ColAttack->Collision(static_cast<int>(ObjectEnum::Monster), ColType::AABBBOX2D, ColType::AABBBOX2D);
+
+	if (Attack == nullptr)
+	{
+		return;
+	}
+
+	if (Attack != nullptr)
+	{
+		Attack->DynamicThis<Monster>()->Damage(10);
+
+	}
+}

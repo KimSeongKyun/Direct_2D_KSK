@@ -66,6 +66,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> MainRenderer;
 	std::shared_ptr<class GameEngineSpriteRenderer> Body;
 	std::shared_ptr<class GameEngineCollision> ColRope;
+	std::shared_ptr<class GameEngineCollision> ColAttack;
 	
 
 public:
@@ -81,5 +82,7 @@ public:
 	void GravityCheck(float _DeltaTime);
 	void LRColCheck(float _DeltaTime, float4 _LeftOrRight);
 	void RopeCheck();
+
+	void Attack();
 };
 
