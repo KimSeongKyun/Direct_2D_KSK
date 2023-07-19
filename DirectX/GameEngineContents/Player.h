@@ -3,14 +3,7 @@
 #include <GameEngineCore/GameEngineFSM.h>
 
 // Ό³Έν :
-enum class PlayerState
-{
-	Idle,
-	LMove,
-	Rope,
-	Climb,
-	Swing
-};
+
 
 enum class PlayerDirection
 {
@@ -50,6 +43,11 @@ private:
 	float Gravity = 0.0f;
 	
 	bool PlayerGravity = true;
+
+	bool SkillOn = false;
+
+	float SkillTime = 0.0f;
+	float MaxSkillTime = 0.0f;
 	
 	float4 PlayerSize = { 39.0f, 82.0f };
 	float4 PlayerHalfValue;
@@ -67,6 +65,8 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> Body;
 	std::shared_ptr<class GameEngineCollision> ColRope;
 	std::shared_ptr<class GameEngineCollision> ColAttack;
+	std::shared_ptr<class PlayerSkill> Skill0;
+
 	
 
 public:
@@ -77,12 +77,13 @@ public:
 	void SetCurMapScale(float4 _MapScale);
 	//void CameraUpdate(float _DeltaTime);
 	std::shared_ptr<class GameEngineTexture> GetColMap() { return ColMap; };
-	
+	static float4 PlayerPos;
 
 	void GravityCheck(float _DeltaTime);
 	void LRColCheck(float _DeltaTime, float4 _LeftOrRight);
 	void RopeCheck();
 
 	void Attack();
+	void MagicBolt();
 };
 

@@ -31,10 +31,11 @@ void Monster::GravityCheck(float _Delta)
 
 	if (GravityOn == true)
 	{
-		Gravity += 10 * _Delta;
-		if (Gravity > 9.0f)
+		Gravity += 10 *_Delta;
+
+		if (Gravity > 5.0f)
 		{
-			Gravity = 9.0f;
+			Gravity = 5.0f;
 		}
 
 		float4 PlayerGravityValue = float4::Down * Gravity;
@@ -70,9 +71,10 @@ void Monster::SetMonsterSize(float4 _Size)
 }
  
 void Monster::Damage(int _Damge)
-{
-	HP -= _Damge;
+{	
+}
 
-	int a = HP;
-	int b = 0;
+void Monster::SetKnockBack()
+{
+	KnockBack = true;
 }

@@ -23,6 +23,10 @@ Ellinia0_Level::~Ellinia0_Level()
 
 void Ellinia0_Level::Start()
 {
+	if (false == GameEngineInput::IsKey("Debug"))
+	{
+		GameEngineInput::CreateKey("Debug", 'K');
+	}
 	if (nullptr == GameEngineSprite::Find("Ellinia0"))
 	{
 		GameEngineDirectory NewDir;
@@ -59,6 +63,7 @@ void Ellinia0_Level::Start()
 		MonsterObject = CreateActor<Snale>();
 		MonsterObject->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
 		MonsterObject->SetColMap("ColEllinia0.png");
+		MonsterObject->SetHP(100);
 	}
 
 	{
@@ -96,6 +101,12 @@ void Ellinia0_Level::Update(float _DeltaTime)
 	{
 		GameEngineCore::ChangeLevel("Ellinia1_Level");
 	}
+
+	if (GameEngineInput::IsDown("Debug"))
+	{
+		GameEngineLevel::IsDebugSwitch();
+	}
+	
 
 	float4 aaaa = Player0->GetTransform()->GetWorldPosition();
 	float4 bbb = GetMainCamera()->GetTransform()->GetWorldPosition();

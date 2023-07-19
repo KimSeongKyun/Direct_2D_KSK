@@ -28,7 +28,7 @@ void Player::StateInit()
 		{
 
 			PlayerGravity = true;
-	
+
 			GravityCheck(_DeltaTime);
 
 
@@ -36,7 +36,7 @@ void Player::StateInit()
 			{
 				if (true == GameEngineInput::IsPress("MoveLeft"))
 				{
-
+					MagicBolt();
 					LRColCheck(_DeltaTime, float4::Left);
 					GetTransform()->SetLocalPositiveScaleX();
 				}
@@ -75,6 +75,7 @@ void Player::StateInit()
 			if (true == GameEngineInput::IsDown("Swing"))
 			{
 				RendererStateChange("Swing");
+				Attack();
 			}
 
 			if (CurPlayerState == "Swing")
@@ -138,9 +139,10 @@ void Player::StateInit()
 					return;
 				}
 
-				if (true == GameEngineInput::IsPress("Swing"))
+				if (true == GameEngineInput::IsDown("Swing"))
 				{
 					RendererStateChange("Swing");
+					Attack();
 				}
 				if (true == GameEngineInput::IsPress("Jump"))
 				{
@@ -234,7 +236,7 @@ void Player::StateInit()
 						
 						NextPosition += float4::Right * Speed * _DeltaTime;
 					}
-					if (true == GameEngineInput::IsPress("Swing"))
+					if (true == GameEngineInput::IsDown("Swing"))
 					{
 						RendererStateChange("Swing");
 					}
@@ -275,6 +277,7 @@ void Player::StateInit()
 
 				if (CurPlayerState == "Swing")
 				{
+
 					if (true == Body->IsAnimationEnd())
 					{
 						FSM.ChangeState("Idle");

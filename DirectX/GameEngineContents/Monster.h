@@ -31,8 +31,9 @@ public:
 	float GetGravity() { return Gravity; };
 	void SetGravity(float _value) { Gravity = _value; };
 	bool IsGravity() { return GravityOn; }
-	void SetHP(int _HP) { HP = _HP; };
-
+	virtual void SetHP(int _HP) = 0;
+	bool IsKnockBack() { return KnockBack; };
+	void ChangeKnockBack() { KnockBack = !KnockBack; };
 
 	
 
@@ -52,12 +53,15 @@ private:
 	float4 MonsterScale;
 	float Gravity = 0.0f;
 	bool GravityOn = true;
+	bool KnockBack = false;
 
-	int HP = 0;
+
 
 
 public:
-	void Damage(int _Damge);
+	virtual void Damage(int _Damge) = 0;
+	void SetKnockBack();
+	
 	
 };
 

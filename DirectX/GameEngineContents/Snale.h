@@ -22,18 +22,25 @@ public:
 	Snale& operator=(const Snale& _Other) = delete;
 	Snale& operator=(Snale&& _Other) noexcept = delete;
 
+	void Damage(int _Damage) override;
+	void SetHP(int _HP) override;
+
 
 protected:
 	void Start();
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
+	
 
 private:
+	std::shared_ptr<class GameEngineCollision> ColBody;
 	std::shared_ptr<class GameEngineSpriteRenderer> Render0;
 	std::string StateString;
 	float4 SnaleSize = { 37.0f ,26.0f };
 	float StackTime = 0.0f;
 	float Speed = 40.0f;
+	float TickTime = 0.0f;
+	int HP = 100;
 
 public:
 	void ChangeState(const std::string& _State);

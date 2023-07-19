@@ -9,14 +9,17 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineSprite.h>
-#include<GameEngineBase/GameEngineRandom.h>
+#include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngineCore/GameEngineActor.h>
 
 #include "KSKSpriteRenderer.h"
 
 #include "ObjectEnum.h"
 #include "Monster.h"
+#include "PlayerSkill.h"
 
 Player* Player::MainPlayer = nullptr;
+float4 Player::PlayerPos = { 0.0f, 0.0f, 0.0f };
 
 Player::Player()
 {
@@ -29,16 +32,12 @@ Player::~Player()
 
 void Player::Start()
 {
-
-
 	StateInit();
-
-
 }
 
 void Player::Update(float _DeltaTime)
 {
-	
+	PlayerPos = GetTransform()->GetWorldPosition();
 	float4 CurCameraPos = GetLevel()->GetMainCamera()->GetTransform()->GetWorldPosition();
 	float4 CameraScale = GameEngineWindow::GetScreenSize();
 	float4 MapScale = CurMap->GetScale();
@@ -46,7 +45,7 @@ void Player::Update(float _DeltaTime)
 	float RightEnd = MapScale.hx() - CameraScale.hx();
 	float UpEnd = MapScale.hy() - CameraScale.hy();
 	float DownEnd = -MapScale.hy() + CameraScale.hy();
-	int a = 0;
+
 	FSM.Update(_DeltaTime);
 
 	float4 NextCameraPos = GetLevel()->GetMainCamera()->GetTransform()->GetWorldPosition();
@@ -63,8 +62,18 @@ void Player::Update(float _DeltaTime)
 		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(NextCameraPos);
 	}
 
-	
-	
+	if (SkillOn == true)
+	{
+		SkillTime += _DeltaTime;
+
+		if (SkillTime >= MaxSkillTime != 0.0f)
+		{
+			Skill0->Death();
+			Skill0 = nullptr;
+			SkillTime = 0.0f;
+			SkillOn = false;
+		}
+	}
 		
 }
 
@@ -114,6 +123,8 @@ void Player::LevelChangeStart()
 
 	}
 
+	
+
 	if (nullptr == Body)
 	{
 		Body = CreateComponent< GameEngineSpriteRenderer>();
@@ -136,7 +147,7 @@ void Player::LevelChangeStart()
 		{
 			ColAttack = CreateComponent<GameEngineCollision>();
 			ColAttack->GetTransform()->SetLocalScale(PlayerSize);
-			ColAttack->GetTransform()->AddLocalPosition({ PlayerSize.x, 0.0f });
+			ColAttack->GetTransform()->AddLocalPosition({- PlayerSize.x, 0.0f });
 			ColAttack->SetOrder(static_cast<int>(ObjectEnum::Player));
 		}
 	}
@@ -272,7 +283,19 @@ void Player::Attack()
 
 	if (Attack != nullptr)
 	{
-		Attack->DynamicThis<Monster>()->Damage(10);
+		std::shared_ptr<Monster> ColMonster = Attack->GetActor()->DynamicThis<Monster>();
 
+		ColMonster->Damage(10);
+	}
+}
+void Player::MagicBolt()
+{
+	if (Skill0 == nullptr)
+	{
+		Skill0 = GetLevel()->CreateActor<PlayerSkill>();
+		Skill0->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
+		Skill0->SetSkillName("MagicBolt");
+		MaxSkillTime = 1.0f;
+		SkillOn = true;
 	}
 }
