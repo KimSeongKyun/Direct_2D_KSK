@@ -74,7 +74,7 @@ void Monster::Damage(int _Damge)
 {	
 }
 
-void Monster::SetKnockBack()
+void Monster::SetKnockBack()	
 {
 	KnockBack = true;
 }

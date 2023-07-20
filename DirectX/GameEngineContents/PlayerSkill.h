@@ -2,6 +2,12 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
+
+enum class SkillList
+{
+	None,
+	MagicBolt,
+};
 class PlayerSkill :public GameEngineActor
 {
 public:
@@ -31,11 +37,14 @@ private:
 	float Speed = 500.0f;
 
 	float4 MagicBoltScale = { 45.0f, 45.0f, 1.0f };
-
-	std::string SkillName;
+	SkillList CurSkill;
+	bool DirectionSet = true;
+	int CurPlayerDirection = 0;
 
 public:
 	void MagicBoltUpdate(float _Delta);
-	void SetSkillName(std::string_view _Name);
-};
+	void MagicBoltColCheck();
+	void SetSkillName(SkillList _Skill);
+
+};	
 

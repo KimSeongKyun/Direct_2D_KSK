@@ -36,9 +36,9 @@ void Player::StateInit()
 			{
 				if (true == GameEngineInput::IsPress("MoveLeft"))
 				{
-					MagicBolt();
 					LRColCheck(_DeltaTime, float4::Left);
 					GetTransform()->SetLocalPositiveScaleX();
+					CurDirection = PlayerDirection::Left;
 				}
 
 				if (true == GameEngineInput::IsPress("MoveRight"))
@@ -46,6 +46,7 @@ void Player::StateInit()
 
 					LRColCheck(_DeltaTime, float4::Right);
 					GetTransform()->SetLocalNegativeScaleX();
+					CurDirection = PlayerDirection::Right;
 				}
 
 				if (true == GameEngineInput::IsPress("Jump"))
@@ -120,12 +121,14 @@ void Player::StateInit()
 				if (true == GameEngineInput::IsPress("MoveLeft"))
 				{
 					GetTransform()->SetLocalPositiveScaleX();
+					CurDirection = PlayerDirection::Left;
 					FSM.ChangeState("Move");
 					
 				}
 				if (true == GameEngineInput::IsPress("MoveRight"))
 				{
 					GetTransform()->SetLocalNegativeScaleX();
+					CurDirection = PlayerDirection::Right;
 					FSM.ChangeState("Move");
 					
 				}

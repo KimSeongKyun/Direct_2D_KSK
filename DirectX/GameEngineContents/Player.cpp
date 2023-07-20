@@ -20,6 +20,7 @@
 
 Player* Player::MainPlayer = nullptr;
 float4 Player::PlayerPos = { 0.0f, 0.0f, 0.0f };
+PlayerDirection Player::CurDirection = PlayerDirection::Left;
 
 Player::Player()
 {
@@ -62,6 +63,12 @@ void Player::Update(float _DeltaTime)
 		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(NextCameraPos);
 	}
 
+	if (GameEngineInput::IsDown("QSkill"))
+	{
+		MagicBolt();
+	}
+	
+
 	if (SkillOn == true)
 	{
 		SkillTime += _DeltaTime;
@@ -96,7 +103,7 @@ void Player::LevelChangeStart()
 
 		GameEngineInput::CreateKey("Swing", 'Z');
 		GameEngineInput::CreateKey("Jump", 'X');
-
+		GameEngineInput::CreateKey("QSkill", 'Q');
 	}
 
 	PlayerHalfValue = { GetTransform()->GetWorldScale().hx(), GetTransform()->GetWorldScale().hy() };
@@ -294,7 +301,7 @@ void Player::MagicBolt()
 	{
 		Skill0 = GetLevel()->CreateActor<PlayerSkill>();
 		Skill0->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
-		Skill0->SetSkillName("MagicBolt");
+		Skill0->SetSkillName(SkillList::MagicBolt);
 		MaxSkillTime = 1.0f;
 		SkillOn = true;
 	}

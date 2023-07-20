@@ -75,9 +75,13 @@ public:
 	void SetColMap(const std::string_view& _ColMap) { ColMap = GameEngineTexture::Find(_ColMap); };
 	void SetCurMap(const std::string_view& _ColMap) { CurMap = GameEngineTexture::Find(_ColMap); };
 	void SetCurMapScale(float4 _MapScale);
+	PlayerDirection GetDirection() { return CurDirection; };
 	//void CameraUpdate(float _DeltaTime);
 	std::shared_ptr<class GameEngineTexture> GetColMap() { return ColMap; };
 	static float4 PlayerPos;
+	static PlayerDirection CurDirection;
+
+	
 
 	void GravityCheck(float _DeltaTime);
 	void LRColCheck(float _DeltaTime, float4 _LeftOrRight);
