@@ -187,6 +187,22 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PinkBean.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PinkBeanDummy.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PinkBeanLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PinkBeanMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PlayerSkill.h">
       <SubType>
       </SubType>
@@ -253,6 +269,22 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PinkBean.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PinkBeanDummy.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PinkBeanLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PinkBeanMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>

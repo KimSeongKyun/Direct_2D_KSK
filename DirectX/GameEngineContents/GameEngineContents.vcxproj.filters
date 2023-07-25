@@ -49,6 +49,18 @@
     <ClInclude Include="PlayerSkill.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="PinkBean.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="PinkBeanDummy.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="PinkBeanMap.h">
+      <Filter>Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="PinkBeanLevel.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -99,6 +111,18 @@
     </ClCompile>
     <ClCompile Include="PlayerSkill.cpp">
       <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PinkBean.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PinkBeanDummy.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PinkBeanMap.cpp">
+      <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="PinkBeanLevel.cpp">
+      <Filter>Levels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

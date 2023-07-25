@@ -20,21 +20,8 @@ Snale::~Snale()
 
 void Snale::Start()
 {
-	if (nullptr == GameEngineSprite::Find("SnaleDIe"))
-	{
-		GameEngineDirectory NewDir;
+	ResourceRoad();
 
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Texture");
-		NewDir.Move("Monster");
-		NewDir.Move("Snale");
-	
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleDie").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleHit").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleIdle").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleMove").GetFullPath());
-	}
 
 	Render0 = CreateComponent< GameEngineSpriteRenderer>();
 	Render0->CreateAnimation({ .AnimationName = "SnaleDie", .SpriteName = "SnaleDie",.FrameInter = 0.2f, .ScaleToTexture = true });
@@ -208,4 +195,23 @@ void Snale::ChangeState(const std::string& _State)
 		Render0->ChangeAnimation(_State);
 	}
 	StateString = _State;
+}
+
+void Snale::ResourceRoad()
+{
+	if (nullptr == GameEngineSprite::Find("SnaleDie"))
+	{
+		GameEngineDirectory NewDir;
+
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+		NewDir.Move("Texture");
+		NewDir.Move("Monster");
+		NewDir.Move("Snale");
+
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleDie").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleHit").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleIdle").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("SnaleMove").GetFullPath());
+	}
 }

@@ -55,9 +55,6 @@ private:
 	bool GravityOn = true;
 	bool KnockBack = false;
 
-
-
-
 public:
 	virtual void Damage(int _Damge) = 0;
 	void SetKnockBack();

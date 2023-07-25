@@ -4,6 +4,7 @@
 #include "Ellinia0_Level.h"
 #include "Ellinia1_Level.h"
 #include "TitleLevel.h"
+#include "PinkBeanLevel.h"
 
 #include <GameEngineCore/GameEngineCoreWindow.h>
 
@@ -30,7 +31,8 @@ void ContentsCore::GameStart()
 	GameEngineCore::CreateLevel<TitleLevel>();
 	GameEngineCore::CreateLevel<Ellinia0_Level>();
 	GameEngineCore::CreateLevel< Ellinia1_Level>();
-	GameEngineCore::ChangeLevel("TitleLevel");
+	GameEngineCore::CreateLevel< PinkBeanLevel>();
+	GameEngineCore::ChangeLevel("PinkBeanLevel");
 }
 
 void ContentsCore::GameEnd() 

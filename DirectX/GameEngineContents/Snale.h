@@ -33,6 +33,8 @@ protected:
 	
 
 private:
+	void ResourceRoad();
+
 	std::shared_ptr<class GameEngineCollision> ColBody;
 	std::shared_ptr<class GameEngineSpriteRenderer> Render0;
 	std::string StateString;

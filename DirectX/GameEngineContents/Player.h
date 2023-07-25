@@ -36,6 +36,8 @@ protected:
 
 
 private:
+	void ComponentSetting();
+
 	GameEngineFSM FSM;
 
 	float Angle = 0.0f;

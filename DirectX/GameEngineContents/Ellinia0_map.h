@@ -28,6 +28,8 @@ protected:
 	float4 GetMapScale();
 
 private:
+	void ComponentSetting();
+
 	std::shared_ptr<class GameEngineSpriteRenderer> BackGround;
 	std::shared_ptr<class GameEngineSpriteRenderer> Ground;
 	

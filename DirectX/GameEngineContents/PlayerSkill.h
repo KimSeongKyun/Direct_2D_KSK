@@ -29,6 +29,8 @@ protected:
 
 
 private:
+	void ComponentSetting();
+
 	std::shared_ptr<class GameEngineSpriteRenderer> SkillRenderer0;
 	std::shared_ptr<class GameEngineSpriteRenderer> SkillRenderer1;
 	std::shared_ptr<class GameEngineCollision> ColSkill;

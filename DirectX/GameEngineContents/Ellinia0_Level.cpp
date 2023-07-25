@@ -11,6 +11,7 @@
 #include "Snale.h"
 #include "Status.h"
 #include "QuickSlot.h"
+#include "PinkBean.h"
 
 
 Ellinia0_Level::Ellinia0_Level()
@@ -27,7 +28,64 @@ void Ellinia0_Level::Start()
 	{
 		GameEngineInput::CreateKey("Debug", 'K');
 	}
-	if (nullptr == GameEngineSprite::Find("Ellinia0"))
+
+	ResourceRoad();
+	CameraSetting();
+	ActorSetting();
+
+}
+
+void Ellinia0_Level::Update(float _DeltaTime)
+{
+	if (GameEngineInput::IsDown("LevelChangeKey"))
+	{
+		GameEngineCore::ChangeLevel("Ellinia1_Level");
+	}
+
+	if (GameEngineInput::IsDown("Debug"))
+	{
+		GameEngineLevel::IsDebugSwitch();
+	}
+}
+
+
+
+void Ellinia0_Level::LevelChangeStart()
+{
+	ResourceRoad();
+	
+	GameEngineLevel::LevelChangeStart();
+}
+void Ellinia0_Level::LevelChangeEnd()
+{
+	GameEngineLevel::LevelChangeEnd();
+}
+
+void Ellinia0_Level::ResourceRoad()
+{
+	// 플레이어 리소스 로드
+	if (nullptr == GameEngineSprite::Find("Idle"))
+	{
+		GameEngineDirectory NewDir;
+
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+		NewDir.Move("Texture");
+		NewDir.Move("Player");
+
+
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Idle").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Move").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Jump").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Swing0").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Swing1").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Swing2").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Rope").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Ladder").GetFullPath());
+	}
+
+	// 맵 로드
+	if (nullptr == GameEngineSprite::Find("ElliniaMap0"))
 	{
 		GameEngineDirectory NewDir;
 
@@ -35,15 +93,35 @@ void Ellinia0_Level::Start()
 		NewDir.Move("ContentResources");
 		NewDir.Move("Texture");
 		NewDir.Move("Map");
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Ground").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("BackGround").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ColMap").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ElliniaMap0").GetFullPath());
 	}
 
+	// 스킬 리소스 로드
+	if (nullptr == GameEngineSprite::Find("MagicBoltBall"))
+	{
+		GameEngineDirectory NewDir;
+
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+		NewDir.Move("Texture");
+		NewDir.Move("Player");
+		NewDir.Move("Skill");
+		NewDir.Move("MagicBolt");
+
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("MagicBoltBall").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("MagicBoltEffect").GetFullPath());
+	}
+}
+
+void Ellinia0_Level::CameraSetting()
+{
 	GetMainCamera()->GetCamTarget()->DepthSettingOff();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0,-1000.0f });
+}
 
+void Ellinia0_Level::ActorSetting()
+{
 	float4 ScreenSize = GameEngineWindow::GetScreenSize();
 	{
 		Map0 = CreateActor<Ellinia0_map>();
@@ -60,10 +138,17 @@ void Ellinia0_Level::Start()
 	//ContentsCore::MapScale = 
 
 	{
-		MonsterObject = CreateActor<Snale>();
-		MonsterObject->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
-		MonsterObject->SetColMap("ColEllinia0.png");
-		MonsterObject->SetHP(100);
+		Snale0 = CreateActor<Snale>();
+		Snale0->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
+		Snale0->SetColMap("ColEllinia0.png");
+		Snale0->SetHP(100);
+	}
+
+	{
+		PinkBean0 = CreateActor<PinkBean>();
+		PinkBean0->GetTransform()->SetWorldPosition({ 100.0f, -15.0f, 1.0f });
+		PinkBean0->SetColMap("ColEllinia0.png");
+		PinkBean0->SetHP(100);
 	}
 
 	{
@@ -90,37 +175,4 @@ void Ellinia0_Level::Start()
 		StaQuickSlottusRender->GetTransform()->SetWorldPosition(QuickSlotPos);
 	}
 
-	
-
-
-}
-
-void Ellinia0_Level::Update(float _DeltaTime)
-{
-	if (GameEngineInput::IsDown("LevelChangeKey"))
-	{
-		GameEngineCore::ChangeLevel("Ellinia1_Level");
-	}
-
-	if (GameEngineInput::IsDown("Debug"))
-	{
-		GameEngineLevel::IsDebugSwitch();
-	}
-	
-
-	float4 aaaa = Player0->GetTransform()->GetWorldPosition();
-	float4 bbb = GetMainCamera()->GetTransform()->GetWorldPosition();
-}
-
-
-
-void Ellinia0_Level::LevelChangeStart()
-{
-	
-	
-	GameEngineLevel::LevelChangeStart();
-}
-void Ellinia0_Level::LevelChangeEnd()
-{
-	GameEngineLevel::LevelChangeEnd();
 }

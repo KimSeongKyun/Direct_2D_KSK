@@ -25,9 +25,13 @@ protected:
 	void LevelChangeEnd() override;
 
 private:
+	void ResourceRoad();
+	void CameraSetting();
+	void ActorSetting();
 	std::shared_ptr<class Player> Player0 = nullptr;
 	std::shared_ptr<class Ellinia0_map> Map0 = nullptr;
-	std::shared_ptr<class Snale> MonsterObject = nullptr;
+	std::shared_ptr<class Snale> Snale0 = nullptr;
+	std::shared_ptr<class PinkBean> PinkBean0 = nullptr;
 	std::shared_ptr<class Portal> Portal0 = nullptr;
 	std::shared_ptr<class Texture> Map1 = nullptr;
 	std::shared_ptr<class Status> StatusRender = nullptr;

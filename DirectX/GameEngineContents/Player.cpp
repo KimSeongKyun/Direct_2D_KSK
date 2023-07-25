@@ -108,60 +108,7 @@ void Player::LevelChangeStart()
 
 	PlayerHalfValue = { GetTransform()->GetWorldScale().hx(), GetTransform()->GetWorldScale().hy() };
 
-
-	if (nullptr == GameEngineSprite::Find("Idle"))
-	{
-		GameEngineDirectory NewDir;
-
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Texture");
-		NewDir.Move("Player");
-
-	
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Idle").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Move").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Jump").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Swing0").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Swing1").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Swing2").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Rope").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("Ladder").GetFullPath());
-
-	}
-
-	
-
-	if (nullptr == Body)
-	{
-		Body = CreateComponent< GameEngineSpriteRenderer>();
-		Body->CreateAnimation({ .AnimationName = "Idle", .SpriteName = "Idle",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Move", .SpriteName = "Move",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Jump", .SpriteName = "Jump",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Swing0", .SpriteName = "Swing0",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Swing1", .SpriteName = "Swing1",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Swing2", .SpriteName = "Swing2",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Rope", .SpriteName = "Rope",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->CreateAnimation({ .AnimationName = "Ladder", .SpriteName = "Ladder",.FrameInter = 0.2f, .ScaleToTexture = true });
-		Body->ChangeAnimation("Idle");
-
-		{
-			ColRope = CreateComponent<GameEngineCollision>();
-			ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
-			ColRope->SetOrder(static_cast<int>(ObjectEnum::Player));
-		}
-
-		{
-			ColAttack = CreateComponent<GameEngineCollision>();
-			ColAttack->GetTransform()->SetLocalScale(PlayerSize);
-			ColAttack->GetTransform()->AddLocalPosition({- PlayerSize.x, 0.0f });
-			ColAttack->SetOrder(static_cast<int>(ObjectEnum::Player));
-		}
-	}
-
-	
-
-	
+	ComponentSetting();
 }
 void Player::RendererStateChange(const std::string _State)
 {
@@ -302,7 +249,38 @@ void Player::MagicBolt()
 		Skill0 = GetLevel()->CreateActor<PlayerSkill>();
 		Skill0->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
 		Skill0->SetSkillName(SkillList::MagicBolt);
+		RendererStateChange("Swing");
 		MaxSkillTime = 1.0f;
 		SkillOn = true;
+	}
+}
+
+void Player::ComponentSetting()
+{
+	if (nullptr == Body)
+	{
+		Body = CreateComponent< GameEngineSpriteRenderer>();
+		Body->CreateAnimation({ .AnimationName = "Idle", .SpriteName = "Idle",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Move", .SpriteName = "Move",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Jump", .SpriteName = "Jump",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Swing0", .SpriteName = "Swing0",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Swing1", .SpriteName = "Swing1",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Swing2", .SpriteName = "Swing2",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Rope", .SpriteName = "Rope",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->CreateAnimation({ .AnimationName = "Ladder", .SpriteName = "Ladder",.FrameInter = 0.2f, .ScaleToTexture = true });
+		Body->ChangeAnimation("Idle");
+
+		{
+			ColRope = CreateComponent<GameEngineCollision>();
+			ColRope->GetTransform()->SetLocalScale({ 20.0f, 64.0f, 100.0f });
+			ColRope->SetOrder(static_cast<int>(ObjectEnum::Player));
+		}
+
+		{
+			ColAttack = CreateComponent<GameEngineCollision>();
+			ColAttack->GetTransform()->SetLocalScale(PlayerSize);
+			ColAttack->GetTransform()->AddLocalPosition({ -PlayerSize.x, 0.0f });
+			ColAttack->SetOrder(static_cast<int>(ObjectEnum::Player));
+		}
 	}
 }

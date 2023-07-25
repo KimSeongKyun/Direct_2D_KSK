@@ -30,9 +30,13 @@ protected:
 	
 
 private:
+	void ResourceRoad();
+	void CameraSetting();
+	void ActorSetting();
+
 	std::shared_ptr<class Player> Player0 = nullptr;
 	std::shared_ptr<class Ellinia1_map> Map0 = nullptr;
-	std::shared_ptr<class Snale> MonsterObject = nullptr;
+	std::shared_ptr<class Snale> Snale0 = nullptr;
 	std::shared_ptr<class Portal> Portal0 = nullptr;
 	std::shared_ptr<class Status> StatusRender = nullptr;
 	std::shared_ptr<class QuickSlot> StaQuickSlottusRender = nullptr;

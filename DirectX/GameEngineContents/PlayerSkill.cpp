@@ -17,41 +17,9 @@ PlayerSkill::~PlayerSkill()
 }
 void PlayerSkill::Start()
 {
-	if (nullptr == GameEngineSprite::Find("MagicBoltBall"))
-	{
-		GameEngineDirectory NewDir;
+	
+	ComponentSetting();
 
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Texture");
-		NewDir.Move("Player");
-		NewDir.Move("Skill");
-		NewDir.Move("MagicBolt");
-
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("MagicBoltBall").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("MagicBoltEffect").GetFullPath());
-	}
-
-	if (nullptr == SkillRenderer0)
-	{
-		SkillRenderer0 = CreateComponent<GameEngineSpriteRenderer>();
-		SkillRenderer0->CreateAnimation({ .AnimationName = "MagicBoltEffect", .SpriteName = "MagicBoltEffect",.FrameInter = 0.05f,.Loop = false,.ScaleToTexture = true });
-		SkillRenderer0->GetTransform()->AddLocalPosition({ -50.0f, 0.0f ,0.0f });
-		SkillRenderer0->ChangeAnimation("MagicBoltEffect");
-		//SkillRenderer0->Off();
-
-		SkillRenderer1 = CreateComponent<GameEngineSpriteRenderer>();
-		SkillRenderer1->CreateAnimation({ .AnimationName = "MagicBoltBall", .SpriteName = "MagicBoltBall",.FrameInter = 0.05f,.Loop = false, .ScaleToTexture = true });
-		SkillRenderer1->ChangeAnimation("MagicBoltBall");
-		SkillRenderer1->Off();
-	}
-
-	if (nullptr == ColSkill)
-	{
-		ColSkill = CreateComponent<GameEngineCollision>();
-		ColSkill->GetTransform()->SetWorldScale(MagicBoltScale);
-		ColSkill->Off();
-	}
 }
 void PlayerSkill::Update(float _Delta)
 {
@@ -68,41 +36,9 @@ void PlayerSkill::Render(float _Delta)
 }
 void PlayerSkill::LevelChangeStart()
 {
-	if (nullptr == GameEngineSprite::Find("Skill"))
-	{
-		GameEngineDirectory NewDir;
+	ComponentSetting();
 
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Texture");
-		NewDir.Move("Player");
-		NewDir.Move("Skill");
-		NewDir.Move("MagicBolt");
-
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("MagicBoltBall").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("MagicBoltEffect").GetFullPath());
-	}
-
-	if (nullptr == SkillRenderer0)
-	{
-		SkillRenderer0 = CreateComponent<GameEngineSpriteRenderer>();
-		SkillRenderer0->CreateAnimation({ .AnimationName = "MagicBoltEffect", .SpriteName = "MagicBoltEffect",.FrameInter = 0.05f,.Loop = false,.ScaleToTexture = true});
-		SkillRenderer0->ChangeAnimation("MagicBoltEffect");
-		
-		//SkillRenderer0->Off();
-
-		SkillRenderer1 = CreateComponent<GameEngineSpriteRenderer>();
-		SkillRenderer1->CreateAnimation({ .AnimationName = "MagicBoltBall", .SpriteName = "MagicBoltBall",.FrameInter = 0.05f,.Loop = false, .ScaleToTexture = true });
-		SkillRenderer1->ChangeAnimation("MagicBoltBall");
-		SkillRenderer1->Off();
-	}
-
-	if (nullptr == ColSkill)
-	{
-		ColSkill = CreateComponent<GameEngineCollision>();
-		ColSkill->GetTransform()->SetWorldScale(MagicBoltScale);
-		ColSkill->Off();
-	}
+	
 }
 
 void PlayerSkill::SetSkillName(SkillList _Skill)
@@ -177,5 +113,29 @@ void PlayerSkill::MagicBoltColCheck()
 		ColSkill->Off();
 		SkillRenderer1->Off();
 		CurSkill = SkillList::None;
+	}
+}
+
+void PlayerSkill::ComponentSetting()
+{
+	if (nullptr == SkillRenderer0)
+	{
+		SkillRenderer0 = CreateComponent<GameEngineSpriteRenderer>();
+		SkillRenderer0->CreateAnimation({ .AnimationName = "MagicBoltEffect", .SpriteName = "MagicBoltEffect",.FrameInter = 0.05f,.Loop = false,.ScaleToTexture = true });
+		SkillRenderer0->GetTransform()->AddLocalPosition({ -50.0f, 0.0f ,0.0f });
+		SkillRenderer0->ChangeAnimation("MagicBoltEffect");
+		//SkillRenderer0->Off();
+
+		SkillRenderer1 = CreateComponent<GameEngineSpriteRenderer>();
+		SkillRenderer1->CreateAnimation({ .AnimationName = "MagicBoltBall", .SpriteName = "MagicBoltBall",.FrameInter = 0.05f,.Loop = false, .ScaleToTexture = true });
+		SkillRenderer1->ChangeAnimation("MagicBoltBall");
+		SkillRenderer1->Off();
+	}
+
+	if (nullptr == ColSkill)
+	{
+		ColSkill = CreateComponent<GameEngineCollision>();
+		ColSkill->GetTransform()->SetWorldScale(MagicBoltScale);
+		ColSkill->Off();
 	}
 }
