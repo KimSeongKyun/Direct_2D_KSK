@@ -24,7 +24,9 @@ private:
 	void ComponetSetting();
 	void ChangeState(int _StateNum);
 
-	int StateNumber = 0;
+	int StateNumber = 11;
+
+	float4 ResourceDif;
 	std::string PinkBeanState;
 	std::shared_ptr<class GameEngineSpriteRenderer> PinkBeanDummyRender = nullptr;
 };

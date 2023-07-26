@@ -21,7 +21,6 @@ protected:
 	void Render(float _Delta) override;
 
 private:
-	void ImageResourceLoad();
 	bool invincibility = false;
 
 public:

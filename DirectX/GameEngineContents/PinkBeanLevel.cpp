@@ -6,6 +6,7 @@
 #include "PinkBeanMap.h"
 #include "Player.h"
 #include "PinkBeanDummy.h"
+#include "Ariel.h"
 
 PinkBeanLevel::PinkBeanLevel() 
 {
@@ -60,7 +61,10 @@ void PinkBeanLevel::CreateObject()
 		Player0->SetCurMap("PinkBeanMap.png");
 
 		PinkBeanDummy0 = CreateActor<PinkBeanDummy>();
-		PinkBeanDummy0->GetTransform()->SetWorldPosition({ 0.0f, 0.0f, 1.0f });
+		PinkBeanDummy0->GetTransform()->SetWorldPosition({ 25.0f, -105.0f, 1.0f });
+
+		Ariel0 = CreateActor<Ariel>();
+		Ariel0->GetTransform()->SetWorldPosition({ 7.0f, 50.0f, 1.0f });
 	}
 }
 
@@ -180,8 +184,34 @@ void PinkBeanLevel::ResourceRoad()
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("PinkBeanSkill10").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("PinkBeanSkill11").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("PinkBeanSkill12").GetFullPath());
-		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("PinkBeanSkill13").GetFullPath());
 		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("PinkBeanStand0").GetFullPath());
 
+	}
+
+	if (nullptr == GameEngineSprite::Find("ArielStand"))
+	{
+		GameEngineDirectory NewDir;
+
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+		NewDir.Move("Texture");
+		NewDir.Move("Monster");
+		NewDir.Move("Ariel");
+
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielStand").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielDie").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielSkill1").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielSkill2").GetFullPath());
+
+		NewDir.Move("ArielAttack1");
+
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielAttack1Effect").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielAttack1Hit").GetFullPath());
+
+		NewDir.MoveParent();
+		NewDir.Move("ArielAttack2");
+
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielAttack2Effect").GetFullPath());
+		GameEngineSprite::LoadFolder(NewDir.GetPlusFileName("ArielAttack2Hit").GetFullPath());
 	}
 }

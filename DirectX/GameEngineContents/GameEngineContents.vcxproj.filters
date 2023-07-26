@@ -61,6 +61,9 @@
     <ClInclude Include="PinkBeanLevel.h">
       <Filter>Levels</Filter>
     </ClInclude>
+    <ClInclude Include="Ariel.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -123,6 +126,9 @@
     </ClCompile>
     <ClCompile Include="PinkBeanLevel.cpp">
       <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Ariel.cpp">
+      <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
