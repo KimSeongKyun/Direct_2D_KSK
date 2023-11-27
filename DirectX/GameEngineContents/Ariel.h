@@ -25,7 +25,8 @@ protected:
 
 private:
 	std::shared_ptr<class GameEngineSpriteRenderer> ArielRender = nullptr;
-	std::vector<std::shared_ptr<class GameEngineSpriteRenderer>> ArielSkillRender;
+	std::vector<std::shared_ptr<class GameEngineSpriteRenderer>> ArielGenesis;
+	std::shared_ptr<class Collision> SkillCol = nullptr;
 
 	std::string ArielState;
 
@@ -38,5 +39,7 @@ private:
 
 	int SkillRange = 385;
 	float SkillTime = 0.0f;
+
+	bool SkillOn = false;
 };
 

@@ -51,7 +51,7 @@ private:
 	float SkillTime = 0.0f;
 	float MaxSkillTime = 0.0f;
 	
-	float4 PlayerSize = { 39.0f, 82.0f };
+		
 	float4 PlayerHalfValue;
 	float4 JumpPower = { 0, 4.5f, 0 };
 	float4 CurMapScale;

@@ -25,11 +25,14 @@ void Ariel::Update(float _Delta)
 
 	if (SkillTime >= 8.0f)
 	{
-		SkillTime = 0.0f;
 		Genesis();
-		
+		SkillTime = 0.0f;
 	}
 	
+	if (SkillOn == true && ArielGenesis[1]->IsAnimationEnd() == true)
+	{
+		int a = 0;
+	}
 	
 
 }
@@ -41,14 +44,14 @@ void Ariel::Render(float _Delta)
 void Ariel::ComponentSetting()
 {
 	ArielRender = CreateComponent <GameEngineSpriteRenderer>();
-	ArielRender->CreateAnimation({ .AnimationName = "ArielStand", .SpriteName = "ArielStand",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielDie", .SpriteName = "ArielDie",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielSkill1", .SpriteName = "ArielSkill1",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielSkill2", .SpriteName = "ArielSkill2",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack1Effect", .SpriteName = "ArielAttack1Effect",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack2Effect", .SpriteName = "ArielAttack2Effect",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack1Hit", .SpriteName = "ArielAttack1Hit",.FrameInter = 0.15f, .ScaleToTexture = true });
-	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack2Hit", .SpriteName = "ArielAttack2Hit",.FrameInter = 0.15f, .ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielStand", .SpriteName = "ArielStand",.FrameInter = 0.15f, .Loop = false,.ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielDie", .SpriteName = "ArielDie",.FrameInter = 0.15f, .Loop = false,.ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielSkill1", .SpriteName = "ArielSkill1",.FrameInter = 0.15f, .Loop = false,.ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielSkill2", .SpriteName = "ArielSkill2",.FrameInter = 0.15f, .Loop = false,.ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack1Effect", .SpriteName = "ArielAttack1Effect",.FrameInter = 0.15f, .Loop = false,.ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack2Effect", .SpriteName = "ArielAttack2Effect",.FrameInter = 0.15f, .Loop = false,.ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack1Hit", .SpriteName = "ArielAttack1Hit",.FrameInter = 0.15f,.Loop = false, .ScaleToTexture = true });
+	ArielRender->CreateAnimation({ .AnimationName = "ArielAttack2Hit", .SpriteName = "ArielAttack2Hit",.FrameInter = 0.15f,.Loop = false, .ScaleToTexture = true });
 	ArielRender->ChangeAnimation("ArielStand");
 
 	for (size_t i = 0; i < 5; i++)
@@ -58,8 +61,9 @@ void Ariel::ComponentSetting()
 		SkillRenderer->CreateAnimation({ .AnimationName = "ArielAttack2Hit", .SpriteName = "ArielAttack2Hit",.FrameInter = 0.15f,.Loop = false, .ScaleToTexture = true });
 		SkillRenderer->GetTransform()->AddLocalPosition({ 0.0f, 90.0f });
 		SkillRenderer->Off();
-		ArielSkillRender.push_back(SkillRenderer);
+		ArielGenesis.push_back(SkillRenderer);
 	}
+	
 	
 }
 
@@ -124,14 +128,17 @@ void Ariel::RenderDifCheck()
 
 void Ariel::Genesis()
 {
+	SkillOn = true;
+
 	for (size_t i = 0; i < 5; i++)
 	{
 		int RandomNum = GameEngineRandom::MainRandom.RandomInt(-385, 385);
-		ArielSkillRender[i]->On();
-		ArielSkillRender[i]->ChangeAnimation("ArielAttack1Hit");
-		ArielSkillRender[i]->GetTransform()->SetLocalPosition({ 0.0f, 90.0f,0.1f });
-		ArielSkillRender[i]->GetTransform()->AddLocalPosition({ static_cast<float>(RandomNum), 0.0f });
+		ArielGenesis[i]->On();
+		ArielGenesis[i]->ChangeAnimation("ArielAttack1Hit");
+		ArielGenesis[i]->GetTransform()->SetLocalPosition({ 0.0f, 90.0f,0.1f });
+		ArielGenesis[i]->GetTransform()->AddLocalPosition({ static_cast<float>(RandomNum), 0.0f });
 	}
 
 	ArielRender->ChangeAnimation("ArielAttack1Effect");
+	ArielRender->SetAnimationUpdateEvent("ArielAttack1Effect", 15, {})
 }
